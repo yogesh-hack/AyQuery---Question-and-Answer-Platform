@@ -7,13 +7,24 @@ import HomeMainbar from "../../components/HomeMainbar/HomeMainbar";
 
 const Home = ({ slideIn }) => {
   return (
-    <div className="home-container-1">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    {/* Left Sidebar */}
+    <div className="lg:col-span-1 w-full">
       <LeftSidebar slideIn={slideIn} />
-      <div className="home-container-2">
-        <HomeMainbar />
-        <RightSidebar />
-      </div>
     </div>
+  
+    {/* Main Content Area */}
+    <div className="lg:col-span-2 w-full mt-20">
+      <HomeMainbar />
+    </div>
+  
+    {/* Right Sidebar */}
+    <div className="lg:col-span-1 w-full mt-20">
+      <RightSidebar />
+    </div>
+  </div>
+  
+  
   );
 };
 

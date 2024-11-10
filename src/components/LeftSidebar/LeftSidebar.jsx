@@ -1,102 +1,62 @@
-import { useEffect, useState } from "react";
-import "./LeftSidebar.css";
-import { NavLink } from "react-router-dom";
-import Globe from "../../assets/Globe.svg";
+import { NavLink } from 'react-router-dom';
+import Globe from '../../assets/Globe.svg';
 
-const LeftSidebar = ({ slideIn, handleSlideIn }) => {
-  const slideInStyle = {
-    transform: "translateX(0%)",
-  };
-
-  const slideOutStyle = {
-    transform: "translateX(-100%)",
-  };
-
-  const [isDaytime, setIsDaytime] = useState(true);
-
-  // Function to update the theme based on the time of day
-  const updateTheme = () => {
-    const now = new Date();
-    const hours = now.getHours();
-
-    // Define the time range for daytime and nighttime
-    const isDay = hours >= 6 && hours < 18;
-
-    // Set the theme based on the time of day
-    setIsDaytime(isDay);
-  };
-
-  useEffect(() => {
-    // Initial theme update
-    updateTheme();
-
-    // Update the theme every minute
-    const intervalId = setInterval(updateTheme, 60000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
-
-  return (
-    <div
-      className={`left-sidebar ${isDaytime ? 'day' : 'night'}`}
-      style={slideIn ? slideInStyle : slideOutStyle}
-    >
-      <nav className="side-nav">
-        <button onClick={() => handleSlideIn()} className="nav-btn">
-          <NavLink to="/" className="side-nav-links" activeclassname="active">
-            <p>Home</p>
-          </NavLink>
-        </button>
-        <div className="side-nav-div">
-          <div>
-            <p>PUBLIC</p>
-          </div>
-          <button onClick={() => handleSlideIn()} className="nav-btn">
-            <NavLink
-              to="/Questions"
-              className="side-nav-links"
-              activeclassname="active"
-            >
-              <img src={Globe} alt="Globe" />
-              <p style={{ paddingLeft: "10px" }}> Questions </p>
-            </NavLink>
-          </button>
-          <button onClick={() => handleSlideIn()} className="nav-btn">
-            <NavLink
-              to="/Tags"
-              className="side-nav-links"
-              activeclassname="active"
-              style={{ paddingLeft: "40px" }}
-            >
-              <p>Tags</p>
-            </NavLink>
-          </button>
-          <button onClick={() => handleSlideIn()} className="nav-btn">
-            <NavLink
-              to="/Users"
-              className="side-nav-links"
-              activeclassname="active"
-              style={{ paddingLeft: "40px" }}
-            >
-              <p>Users</p>
-            </NavLink>
-          </button>
-          <button onClick={() => handleSlideIn()} className="nav-btn">
-            <NavLink
-              to="/video"
-              className="side-nav-links"
-              activeclassname="active"
-              style={{ paddingLeft: "40px" }}
-            >
-              <p>Watch Video</p>
-            </NavLink>
-          </button>
+const LeftSidebar = ({ slideIn, handleSlideIn }) => (
+  <div
+    className={`${
+      slideIn ? 'translate-x-0' : '-translate-x-full'
+    } fixed left-10 top-24 z-50 w-64 h-full border rounded shadow bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
+  >
+    <nav className="side-nav p-4">
+      <button onClick={handleSlideIn} className="nav-btn mb-4">
+        <NavLink
+          to="/"
+          className="side-nav-links text-lg text-gray-700 dark:text-white hover:text-blue-500"
+          activeClassName="active"
+        >
+          <p>Home</p>
+        </NavLink>
+      </button>
+      <div className="side-nav-div">
+        <div className="mb-4">
+          <p className="text-sm font-semibold text-gray-500 dark:text-gray-300">PUBLIC</p>
         </div>
-      </nav>
-    </div>
-  );
-};
+        <NavLink
+          to="/Questions"
+          className="nav-btn w-full py-2 px-4 mb-2 text-left flex items-center"
+          onClick={handleSlideIn}
+          activeClassName="active"
+        >
+          <img src={Globe} alt="Globe" className="mr-3" />
+          <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Questions</p>
+        </NavLink>
+        <NavLink
+          to="/Tags"
+          className="nav-btn w-full py-2 px-4 mb-2 text-left"
+          onClick={handleSlideIn}
+          activeClassName="active"
+        >
+          <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Tags</p>
+        </NavLink>
+        <NavLink
+          to="/Users"
+          className="nav-btn w-full py-2 px-4 mb-2 text-left"
+          onClick={handleSlideIn}
+          activeClassName="active"
+        >
+          <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Users</p>
+        </NavLink>
+        <NavLink
+          to="/video"
+          className="nav-btn w-full py-2 px-4 mb-2 text-left"
+          onClick={handleSlideIn}
+          activeClassName="active"
+        >
+          <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Watch Video</p>
+        </NavLink>
+      </div>
+    </nav>
+  </div>
+);
 
 export default LeftSidebar;

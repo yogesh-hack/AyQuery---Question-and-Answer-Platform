@@ -5,13 +5,23 @@ import QuestionsDetails from "./QuestionsDetails";
 
 const DisplayQuestion = ({ slideIn, handleSlideIn }) => {
   return (
-    <div className="home-container-1">
-      <LeftSidebar slideIn={slideIn} handleSlideIn={handleSlideIn} />
-      <div className="home-container-2">
-        <QuestionsDetails />
-        <RightSidebar />
-      </div>
-    </div>
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+  {/* Left Sidebar */}
+  <div className="lg:col-span-1 w-full">
+  <LeftSidebar slideIn={slideIn} handleSlideIn={handleSlideIn} />
+  </div>
+
+  {/* Main Content Area */}
+  <div className="lg:col-span-2 w-full mt-20">
+    <QuestionsDetails />
+  </div>
+
+  {/* Right Sidebar */}
+  <div className="lg:col-span-1 w-full mt-20">
+    <RightSidebar />
+  </div>
+</div>
+
   );
 };
 

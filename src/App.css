@@ -1,51 +1,6 @@
-.home-container-1 {
-  min-height: 100vh;
-  max-width: 1250px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin: 0% auto;
-}
-
-.home-container-2 {
-  max-width: 1100px;
-  width: calc(100% - 164px);
-  padding: 24px;
-  box-sizing: border-box;
-}
-
-@media screen and (max-width: 760px) {
-  .home-container-2 {
-    max-width: 100%;
-    width: 100%;
-  }
-}
 .App {
   background: #f0f0f0;
-  color: #333;
+  color: #000000;
   transition: background 1s, color 1s;
-}
-
-.night {
-  background: #333;
-  color: #f0f0f0;
-}
-.night p{
-  color: white !important;
-}
-.night .widget, .widget-tags, .ask-ques-container, .auth-container-2, .auth-container-1, .display-time{
-  color: black;
-}
-.night .right-sidebar-div-2 > p{
-  color: black !important;
-}
-.night .display-votes-ans > p, .auth-container-1>p{
-  color: black !important;
-}
-.night .display-tags > p{
-  color: rgb(141, 111, 248) !important;
-}
-.night .widget-tags > .widget-tags-div > p{
-  color : black;
 }
 

@@ -10,6 +10,7 @@ import Tags from "./Pages/Tags/Tags";
 import Users from "./Pages/Users/Users";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import Video from "./Pages/WatchVideo/video";
+import Aboutus from "./Pages/Aboutus/Aboutus";
 
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (
@@ -45,9 +46,15 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
         }
       />
       <Route
+        path="/Aboutus"
+        element={
+          <Aboutus/>
+        }
+      />
+      <Route
         path="/video"
         element={
-          <Video/>
+          <Video slideIn={slideIn} handleSlideIn={handleSlideIn}/>
         }
       />
     </Routes>

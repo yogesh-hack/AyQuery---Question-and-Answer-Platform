@@ -6,7 +6,6 @@ import copy from "copy-to-clipboard";
 
 import upvote from "../../assets/sort-up.svg";
 import downvote from "../../assets/sort-down.svg";
-import "./Questions.css";
 import Avatar from "../../components/Avatar/Avatar";
 import DisplayAnswer from "./DisplayAnswer";
 import {
@@ -76,130 +75,125 @@ const QuestionsDetails = () => {
   };
 
   return (
-    <div className="question-details-page">
-      {questionsList.data === null ? (
-        <h1>Loading...</h1>
-      ) : (
-        <>
-          {questionsList.data
-            .filter((question) => question._id === id)
-            .map((question) => (
-              <div key={question._id}>
-                <section className="question-details-container">
-                  <h1>{question.questionTitle}</h1>
-                  <div className="question-details-container-2">
-                    <div className="question-votes">
-                      <img
-                        src={upvote}
-                        alt=""
-                        width="18"
-                        className="votes-icon"
-                        onClick={handleUpVote}
-                      />
-                      <p>{question.upVote.length - question.downVote.length}</p>
-                      <img
-                        src={downvote}
-                        alt=""
-                        width="18"
-                        className="votes-icon"
-                        onClick={handleDownVote}
-                      />
+    <div className="p-6 text-gray-900  dark:text-gray-100 min-h-screen">
+  {questionsList.data === null ? (
+    <h1 className="text-center text-2xl font-semibold my-8">Loading...</h1>
+  ) : (
+    <>
+      {questionsList.data
+        .filter((question) => question._id === id)
+        .map((question) => (
+          <div key={question._id} className="space-y-8">
+            <section className="space-y-6 p-8 bg-white border rounded-lg shadow-xl dark:bg-gray-800 transition-colors duration-300">
+              <h1 className="text-3xl font-bold">{question.questionTitle}</h1>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div className="flex flex-col items-center space-y-2 lg:col-span-2">
+                  <img
+                    src={upvote}
+                    alt="Upvote"
+                    width="24"
+                    className="cursor-pointer hover:scale-110 transition-transform duration-150"
+                    onClick={handleUpVote}
+                  />
+                  <p className="font-semibold text-lg">{question.upVote.length - question.downVote.length}</p>
+                  <img
+                    src={downvote}
+                    alt="Downvote"
+                    width="24"
+                    className="cursor-pointer hover:scale-110 transition-transform duration-150"
+                    onClick={handleDownVote}
+                  />
+                </div>
+                <div className="lg:col-span-10 space-y-4">
+                  <p className="text-lg leading-relaxed">{question.questionBody}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {question.questionTags.map((tag) => (
+                      <span key={tag} className="px-3 py-1 bg-blue-500 text-white text-sm rounded-lg dark:bg-blue-600">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center mt-6">
+                    <div className="space-x-4">
+                      <button
+                        onClick={handleShare}
+                        className="px-4 py-2 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600 transition-colors duration-150"
+                      >
+                        Share
+                      </button>
+                      {User?.result?._id === question?.userId && (
+                        <button
+                          onClick={handleDelete}
+                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-150"
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
-                    <div style={{ width: "100%" }}>
-                      <p className="question-body">{question.questionBody}</p>
-                      <div className="question-details-tags">
-                        {question.questionTags.map((tag) => (
-                          <p key={tag}>{tag}</p>
-                        ))}
-                      </div>
-                      <div className="question-actions-user">
-                        <div>
-                          <button type="button" onClick={handleShare}>
-                            Share
-                          </button>
-                          {User?.result?._id === question?.userId && (
-                            <button type="button" onClick={handleDelete}>
-                              Delete
-                            </button>
-                          )}
-                        </div>
-                        <div>
-                          <p>asked {moment(question.askedOn).fromNow()}</p>
-                          <Link
-                            to={`/Users/${question.userId}`}
-                            className="user-link"
-                            style={{ color: "#0086d8" }}
-                          >
-                            <Avatar
-                              backgroundColor="orange"
-                              px="8px"
-                              py="5px"
-                              borderRadius="4px"
-                            >
-                              {question.userPosted.charAt(0).toUpperCase()}
-                            </Avatar>
-                            <div>{question.userPosted}</div>
-                          </Link>
-                        </div>
-                      </div>
+                    <div className="flex items-center space-x-3">
+                      <p className="text-sm">asked {moment(question.askedOn).fromNow()}</p>
+                      <Link
+                        to={`/Users/${question.userId}`}
+                        className="flex items-center space-x-2 text-blue-500 hover:underline"
+                      >
+                        <Avatar backgroundColor="orange" px="8px" py="5px" borderRadius="4px">
+                          {question.userPosted.charAt(0).toUpperCase()}
+                        </Avatar>
+                        <span>{question.userPosted}</span>
+                      </Link>
                     </div>
                   </div>
-                </section>
-                {question.noOfAnswers !== 0 && (
-                  <section>
-                    <h3>{question.noOfAnswers} Answers</h3>
-                    <DisplayAnswer
-                      key={question._id}
-                      question={question}
-                      handleShare={handleShare}
-                    />
-                  </section>
-                )}
-                <section className="post-ans-container">
-                  <h3>Your Answer</h3>
-                  <form
-                    onSubmit={(e) => {
-                      handlePostAns(e, question.answer.length);
-                    }}
-                  >
-                    <textarea
-                      name=""
-                      id=""
-                      cols="30"
-                      rows="10"
-                      value={Answer}
-                      onChange={(e) => setAnswer(e.target.value)}
-                    ></textarea>
-                    <br />
-                    <input
-                      type="submit"
-                      className="post-ans-btn"
-                      value="Post Your Answer"
-                    />
-                  </form>
-                  <p>
-                    Browse other Question tagged
-                    {question.questionTags.map((tag) => (
-                      <Link to="/Tags" key={tag} className="ans-tags">
-                        {" "}
-                        {tag}{" "}
-                      </Link>
-                    ))}{" "}
-                    or
-                    <Link
-                      to="/AskQuestion"
-                      style={{ textDecoration: "none", color: "#009dff" }}
-                    >
-                      {" "}
-                      ask your own question.
-                    </Link>
-                  </p>
-                </section>
+                </div>
               </div>
-            ))}
-        </>
-      )}
-    </div>
+            </section>
+            {question.noOfAnswers !== 0 && (
+              <section className="mt-8 space-y-4">
+                <h3 className="text-2xl font-semibold">{question.noOfAnswers} Answers</h3>
+                <DisplayAnswer question={question} handleShare={handleShare} />
+              </section>
+            )}
+            <section className="space-y-6 mt-8 p-6 bg-white border rounded-lg shadow-xl dark:bg-gray-800 transition-colors duration-300">
+              <h3 className="text-xl font-semibold">Your Answer</h3>
+              <form
+                onSubmit={(e) => handlePostAns(e, question.answer.length)}
+                className="space-y-4"
+              >
+                <textarea
+                  value={Answer}
+                  onChange={(e) => setAnswer(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 transition-colors duration-150"
+                  rows="6"
+                ></textarea>
+                <button
+                  type="submit"
+                  className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-150 dark:bg-blue-600 dark:hover:bg-blue-700"
+                >
+                  Post Your Answer
+                </button>
+              </form>
+              <p className="text-sm mt-4">
+                Browse other questions tagged{" "}
+                {question.questionTags.map((tag) => (
+                  <Link to="/Tags" key={tag} className="text-blue-500 hover:underline">
+                    {tag}
+                  </Link>
+                ))}{" "}
+                or{" "}
+                <Link
+                  to="/AskQuestion"
+                  className="text-blue-500 hover:underline"
+                >
+                  ask your own question
+                </Link>.
+              </p>
+            </section>
+          </div>
+        ))}
+    </>
+  )}
+</div>
+
+  
   );
 };
 

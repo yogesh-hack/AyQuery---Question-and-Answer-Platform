@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
 import ReactPlayer from 'react-player';
-import "./videoplayer.css"
 
 const Videoplayer = ({ videos }) => {
     const playerRef = useRef(null);
@@ -45,51 +44,61 @@ const Videoplayer = ({ videos }) => {
     };
 
     return (
-        <div className='video-container'>
-            <div {...bind()} style={{ touchAction: 'none' }}>
-                <h2 style={{ paddingTop: '40px' }}>Watch video</h2>
-                <animated.div
-                    style={{
-                        width: '100%',
-                        height: '8px',
-                        background: 'rgba(0, 0, 0, 0.2)',
-                        transform: xy.to((x) => `translateX(${x}px)`),
-                    }}
-                />
-                <ReactPlayer
-                    ref={playerRef}
-                    url={selectedVideo}
-                    playing={playing}
-                    controls
-                    width="100%"
-                    height="100%"
-                    playbackRate={speed}
-                    onEnded={() => setPlaying(false)}
-                />
-            </div>
-            <div className='video-list'>
-                <h2>Video List</h2>
-                <div class="card-category-3">
-                    <ul>
-                    {videos.map((videoUrl, index) => (
-                        <li key={index}>
-                            <div class="ioverlay-card io-card-2">
-                                <div class="card-content">
-                                    <span class="card-title">Smaple Video {index + 1}</span>
-                                    
-                                </div>
-                                <span class="card-link">
-                                    <button onClick={() => handleVideoClick(videoUrl)}>▶️Play</button>
-                                </span>
-                                <img src="https://www.dropbox.com/s/lsxxizyph3ic7zb/frog-4296784_640.jpg?raw=1" />
-                            </div>
-                        </li>
-                        ))}
-                    </ul>
+        <div className="p-6 bg-gray-100 dark:bg-gray-900 min-h-screen">
+  {/* Video Player Section */}
+  <div className="video-player bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 mb-8">
+    <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 pb-4">Watch Video</h2>
+    <animated.div
+      style={{
+        width: '100%',
+        height: '8px',
+        background: 'rgba(0, 0, 0, 0.2)',
+        transform: xy.to((x) => `translateX(${x}px)`),
+      }}
+    />
+    <div className="player-container relative pt-[56.25%]">
+      <ReactPlayer
+        ref={playerRef}
+        url={selectedVideo}
+        playing={playing}
+        controls
+        width="100%"
+        height="100%"
+        playbackRate={speed}
+        onEnded={() => setPlaying(false)}
+      />
+    </div>
+  </div>
 
-                </div>          
+  {/* Video List Section */}
+  <div className="video-list">
+    <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Video List</h2>
+    <div className="card-category-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <ul>
+        {videos.map((videoUrl, index) => (
+          <li key={index} className="video-card">
+            <div className="overlay-card relative bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+              <img
+                className="w-full h-[200px] object-cover rounded-t-lg"
+                src="https://www.dropbox.com/s/lsxxizyph3ic7zb/frog-4296784_640.jpg?raw=1"
+                alt={`Video Thumbnail ${index + 1}`}
+              />
+              <div className="card-content p-4">
+                <span className="text-xl font-medium text-gray-900 dark:text-gray-100">
+                  Sample Video {index + 1}
+                </span>
+              </div>
+              <span className="card-link absolute bottom-4 left-4 text-white bg-indigo-600 hover:bg-indigo-700 py-2 px-4 rounded-full cursor-pointer">
+                <button onClick={() => handleVideoClick(videoUrl)}>▶️ Play</button>
+              </span>
             </div>
-        </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>
+
     )
 }
 
