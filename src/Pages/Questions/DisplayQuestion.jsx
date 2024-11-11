@@ -6,13 +6,13 @@ import QuestionsDetails from "./QuestionsDetails";
 const DisplayQuestion = ({ slideIn, handleSlideIn }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-  {/* Left Sidebar */}
+  {/* Left Sidebar
   <div className="lg:col-span-1 w-full">
   <LeftSidebar slideIn={slideIn} handleSlideIn={handleSlideIn} />
-  </div>
+  </div> */}
 
   {/* Main Content Area */}
-  <div className="lg:col-span-2 w-full mt-20">
+  <div className="lg:col-span-3 w-full mt-20">
     <QuestionsDetails />
   </div>
 

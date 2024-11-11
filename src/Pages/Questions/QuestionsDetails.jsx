@@ -3,7 +3,8 @@ import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import copy from "copy-to-clipboard";
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import the Quill editor styles
 import upvote from "../../assets/sort-up.svg";
 import downvote from "../../assets/sort-down.svg";
 import Avatar from "../../components/Avatar/Avatar";
@@ -74,6 +75,27 @@ const QuestionsDetails = () => {
     }
   };
 
+  // Custom toolbar options with a code block button
+const modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ color: [] }, { background: [] }],
+    [{ script: 'sub' }, { script: 'super' }],
+    [{ align: [] }],
+    ['blockquote', 'code-block'], // Adds the code block button
+    ['link', 'image', 'video'],
+    ['clean'] // Removes formatting
+  ]
+};
+
+// Configure formats to include 'code-block'
+const formats = [
+  'header', 'font', 'list', 'bold', 'italic', 'underline', 'strike',
+  'color', 'background', 'script', 'align', 'blockquote', 'code-block',
+  'link', 'image', 'video'
+];
   return (
     <div className="p-6 text-gray-900  dark:text-gray-100 min-h-screen">
   {questionsList.data === null ? (
@@ -153,40 +175,42 @@ const QuestionsDetails = () => {
               </section>
             )}
             <section className="space-y-6 mt-8 p-6 bg-white border rounded-lg shadow-xl dark:bg-gray-800 transition-colors duration-300">
-              <h3 className="text-xl font-semibold">Your Answer</h3>
-              <form
+      <h3 className="text-xl font-semibold">Your Answer</h3>
+      <form
                 onSubmit={(e) => handlePostAns(e, question.answer.length)}
                 className="space-y-4"
               >
-                <textarea
-                  value={Answer}
-                  onChange={(e) => setAnswer(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 transition-colors duration-150"
-                  rows="6"
-                ></textarea>
-                <button
-                  type="submit"
-                  className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-150 dark:bg-blue-600 dark:hover:bg-blue-700"
-                >
-                  Post Your Answer
-                </button>
-              </form>
-              <p className="text-sm mt-4">
-                Browse other questions tagged{" "}
-                {question.questionTags.map((tag) => (
-                  <Link to="/Tags" key={tag} className="text-blue-500 hover:underline">
-                    {tag}
-                  </Link>
-                ))}{" "}
-                or{" "}
-                <Link
-                  to="/AskQuestion"
-                  className="text-blue-500 hover:underline"
-                >
-                  ask your own question
-                </Link>.
-              </p>
-            </section>
+        <ReactQuill
+          value={Answer}
+          onChange={setAnswer}
+          theme="snow"
+          modules={modules}
+          formats={formats}
+          className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 transition-colors duration-150"
+          placeholder="Write your answer here..."
+          style={{ height: '200px', marginBottom: '60px' }}
+        />
+        {console.log(Answer)}
+        <button
+          type="submit"
+          className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-150 dark:bg-blue-600 dark:hover:bg-blue-700"
+        >
+          Post Your Answer
+        </button>
+      </form>
+      <p className="text-sm mt-4">
+        Browse other questions tagged{' '}
+        {question.questionTags.map((tag) => (
+          <Link to="/Tags" key={tag} className="text-blue-500 hover:underline">
+            {tag}
+          </Link>
+        ))}{' '}
+        or{' '}
+        <Link to="/AskQuestion" className="text-blue-500 hover:underline">
+          ask your own question
+        </Link>.
+      </p>
+    </section>
           </div>
         ))}
     </>
