@@ -11,6 +11,7 @@ import Users from "./Pages/Users/Users";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import Video from "./Pages/WatchVideo/video";
 import Aboutus from "./Pages/Aboutus/Aboutus";
+import Article from "./Pages/Articles/Article";
 
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (
@@ -43,6 +44,12 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
         path="/Users/:id"
         element={
           <UserProfile slideIn={slideIn} handleSlideIn={handleSlideIn} />
+        }
+      />
+      <Route
+        path="/Articles"
+        element={
+          <Article slideIn={slideIn} handleSlideIn={handleSlideIn} />
         }
       />
       <Route

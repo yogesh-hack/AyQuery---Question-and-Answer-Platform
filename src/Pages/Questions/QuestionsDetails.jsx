@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import copy from "copy-to-clipboard";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import the Quill editor styles
@@ -9,13 +11,83 @@ import upvote from "../../assets/sort-up.svg";
 import downvote from "../../assets/sort-down.svg";
 import Avatar from "../../components/Avatar/Avatar";
 import DisplayAnswer from "./DisplayAnswer";
+import parse from 'html-react-parser'; // For rendering HTML content
 import {
   postAnswer,
   deleteQuestion,
   voteQuestion,
 } from "../../actions/question";
+import { IoArrowBackCircle } from "react-icons/io5";
 
 const QuestionsDetails = () => {
+ // Function to separate code blocks (both ` ``` ` and <pre>) and other content
+ const formatAnswerContent = (text) => {
+  // Regular expression to match both ` ``` ` blocks and <pre> blocks
+  const codeRegex = /<pre[^>]*>([\s\S]*?)<\/pre>/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  // Iterate over the text to separate code and other content
+  while ((match = codeRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push({
+        type: 'text',
+        content: text.slice(lastIndex, match.index).trim(),
+      });
+    }
+
+    // If matched text is inside backticks or <pre> tags, treat it as code
+    const codeContent = match[1];  // Extract content from <pre>
+    parts.push({
+      type: 'code',
+      content: codeContent.trim(),
+    });
+    lastIndex = codeRegex.lastIndex;
+  }
+
+  // Add remaining text
+  if (lastIndex < text.length) {
+    parts.push({
+      type: 'text',
+      content: text.slice(lastIndex).trim(),
+    });
+  }
+
+  return parts;
+};
+
+// Function to safely parse HTML and render it with custom styles
+const parseHtmlContent = (content) => {
+  return parse(content, {
+    replace: (domNode) => {
+      if (domNode.type === 'tag') {
+        // Handle known tags and return React elements
+        if (domNode.name === 'h1') {
+          return <h1 className="text-2xl font-bold my-4">{domNode.children[0]?.data}</h1>;
+        }
+        if (domNode.name === 'h2') {
+          return <h2 className="text-xl font-semibold my-3">{domNode.children[0]?.data}</h2>;
+        }
+        if (domNode.name === 'ol') {
+          return <ol className="list-decimal pl-6 my-3">{domNode.children.map((child, index) => <li key={index}>{child.data}</li>)}</ol>;
+        }
+        if (domNode.name === 'ul') {
+          return <ul className="list-disc pl-6 my-3">{domNode.children.map((child, index) => <li key={index}>{child.data}</li>)}</ul>;
+        }
+        if (domNode.name === 'pre') {
+          return (
+            <SyntaxHighlighter language="javascript" style={materialDark} className="rounded-lg p-2 mb-4">
+              {domNode.children[0]?.data}
+            </SyntaxHighlighter>
+          );
+        }
+      }
+      return domNode; // Default behavior: render the node as is
+    }
+  });
+};
+
   const { id } = useParams();
   const questionsList = useSelector((state) => state.questionsReducer);
 
@@ -96,12 +168,16 @@ const formats = [
   'color', 'background', 'script', 'align', 'blockquote', 'code-block',
   'link', 'image', 'video'
 ];
+
   return (
     <div className="p-6 text-gray-900  dark:text-gray-100 min-h-screen">
+      
   {questionsList.data === null ? (
     <h1 className="text-center text-2xl font-semibold my-8">Loading...</h1>
   ) : (
     <>
+      <button onClick={() => Navigate(-1)} type="button" class="text-white flex items-center gap-2 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"><IoArrowBackCircle /> Back</button>
+
       {questionsList.data
         .filter((question) => question._id === id)
         .map((question) => (
@@ -127,7 +203,28 @@ const formats = [
                   />
                 </div>
                 <div className="lg:col-span-10 space-y-4">
-                  <p className="text-lg leading-relaxed">{question.questionBody}</p>
+                {formatAnswerContent(question.questionBody).map((part, index) =>
+            part.type === 'code' ? (
+              // Render code blocks with syntax highlighting
+              <SyntaxHighlighter
+                key={index}
+                language="javascript"
+                style={materialDark}
+                className="rounded-lg p-2 z-100 mb-4"
+                customStyle={{ whiteSpace: 'pre-wrap' }}
+              >
+                {part.content}
+              </SyntaxHighlighter>
+            ) : (
+              // Render other content as HTML with proper styling (headings, lists, etc.)
+              <div
+                key={index}
+                className="text-base mb-4 leading-relaxed dark:text-gray-300"
+              >
+                {parseHtmlContent(part.content)} 
+              </div>
+            )
+          )}
                   <div className="flex flex-wrap gap-2">
                     {question.questionTags.map((tag) => (
                       <span key={tag} className="px-3 py-1 bg-blue-500 text-white text-sm rounded-lg dark:bg-blue-600">
@@ -186,7 +283,7 @@ const formats = [
           theme="snow"
           modules={modules}
           formats={formats}
-          className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 transition-colors duration-150"
+          className="dark:bg-gray-700 dark:border-gray-600 text-white dark:text-gray-100 transition-colors duration-150"
           placeholder="Write your answer here..."
           style={{ height: '200px', marginBottom: '60px' }}
         />

@@ -14,3 +14,15 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Customize the color and height of the progress bar */
+#nprogress .bar {
+  background: #29d;
+  height: 3px;
+}
+
+/* Customize the spinner */
+#nprogress .spinner-icon {
+  border-top-color: #29d;
+  border-left-color: #29d;
+}

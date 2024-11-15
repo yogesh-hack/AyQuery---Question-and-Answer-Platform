@@ -8,6 +8,7 @@ import parse from 'html-react-parser'; // For rendering HTML content
 import Avatar from "../../components/Avatar/Avatar";
 import { deleteAnswer } from "../../actions/question";
 
+
 const DisplayAnswer = ({ question, handleShare }) => {
   // Function to separate code blocks (both ` ``` ` and <pre>) and other content
   const formatAnswerContent = (text) => {
@@ -84,11 +85,10 @@ const DisplayAnswer = ({ question, handleShare }) => {
   const handleDelete = (answerId, noOfAnswers) => {
     dispatch(deleteAnswer(id, answerId, noOfAnswers - 1));
   };
-
   return (
     <div>
       {question.answer.map((ans) => (
-        <div className="display-ans space-y-4 p-4 bg-gray-50 rounded-lg shadow-md dark:bg-gray-800" key={ans._id}>
+        <div className="display-ans mt-5 space-y-4 p-4 bg-gray-50 rounded-lg shadow-2xl dark:bg-gray-800" key={ans._id}>
           {formatAnswerContent(ans.answerBody).map((part, index) =>
             part.type === 'code' ? (
               // Render code blocks with syntax highlighting

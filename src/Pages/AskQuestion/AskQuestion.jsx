@@ -1,30 +1,30 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill"; // Import ReactQuill
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; 
 import { askQuestion } from "../../actions/question";
 
-// Configure the editor modules (for toolbar and behavior)
+// Editor modules and formats
 const modules = {
   toolbar: [
     [{ header: '1' }, { header: '2' }, { font: [] }],
     [{ list: 'ordered' }, { list: 'bullet' }],
     ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote'],
-    [{ 'align': [] }],
+    ['blockquote', 'code-block'], 
+    [{ align: [] }],
     ['link'],
-    [{ 'color': [] }, { 'background': [] }],
-    [{ 'script': 'sub' }, { 'script': 'super' }],
+    [{ color: [] }, { background: [] }],
+    [{ script: 'sub' }, { script: 'super' }],
     ['image'],
     ['clean']
   ],
 };
 
-// Configure the allowed formats in the editor
 const formats = [
   'header', 'font', 'list', 'bold', 'italic', 'underline', 'strike',
-  'blockquote', 'align', 'link', 'color', 'background', 'script', 'image'
+  'blockquote', 'code-block', 
+  'align', 'link', 'color', 'background', 'script', 'image'
 ];
 
 const AskQuestion = () => {
@@ -38,20 +38,17 @@ const AskQuestion = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!User) {
       alert("Login to ask question");
       return;
     }
-
     if (questionTitle && questionBody && questionTags) {
-      // Dispatch action to ask question
       dispatch(
         askQuestion(
           {
             questionTitle,
             questionBody,
-            questionTags: questionTags.split(" "), // Convert tags into array
+            questionTags: questionTags.split(" "),
             userPosted: User.result.name,
           },
           navigate
@@ -59,12 +56,6 @@ const AskQuestion = () => {
       );
     } else {
       alert("Please enter all the fields");
-    }
-  };
-
-  const handleEnter = (e) => {
-    if (e.key === "Enter") {
-      setQuestionBody((prevBody) => prevBody + "\n");
     }
   };
 
@@ -98,12 +89,11 @@ const AskQuestion = () => {
               <ReactQuill
                 value={questionBody}
                 onChange={setQuestionBody}
-                onKeyPress={handleEnter}
                 className="w-full p-3 border pb-20 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 transition-colors duration-300"
                 placeholder="Write your question body here..."
                 style={{ height: '400px'}}
-                modules={modules} // Pass modules
-                formats={formats} // Pass formats
+                modules={modules}
+                formats={formats}
               />
             </label>
 

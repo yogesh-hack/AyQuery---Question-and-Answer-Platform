@@ -1,0 +1,31 @@
+/* Custom scrollbar style */
+.custom-scrollbar {
+    overflow-y: auto;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Set width to zero to hide initially if desired */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3); /* Darker scrollbar thumb */
+    border-radius: 4px;
+  }
+  
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5); /* Make thumb visible on hover */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* Hide the scrollbar track */
+  }
+  
+  /* Scrollbar styling for Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  }
+  
+  .custom-scrollbar:hover {
+    scrollbar-color: rgba(0, 0, 0, 0);
+  }  

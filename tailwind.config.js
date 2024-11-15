@@ -5,8 +5,18 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: "class",
+  scrollbarWidth: {
+    none: 'none',
+  },
   theme: {
     extend: {},
   },
-  plugins: [],
-}
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.no-scrollbar::-webkit-scrollbar': { display: 'none' },
+        '.no-scrollbar': { scrollbarWidth: 'none', '-ms-overflow-style': 'none' },
+      });
+    },
+  ],
+};
