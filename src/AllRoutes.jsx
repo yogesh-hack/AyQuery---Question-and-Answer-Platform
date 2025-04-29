@@ -12,6 +12,7 @@ import UserProfile from "./Pages/UserProfile/UserProfile";
 import Video from "./Pages/WatchVideo/video";
 import Aboutus from "./Pages/Aboutus/Aboutus";
 import Article from "./Pages/Articles/Article";
+import Tweets from "./components/Tweets/Tweets";
 
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (

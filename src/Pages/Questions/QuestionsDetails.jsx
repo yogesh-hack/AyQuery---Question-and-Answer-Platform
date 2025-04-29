@@ -173,7 +173,8 @@ const formats = [
     <div className="p-6 text-gray-900  dark:text-gray-100 min-h-screen">
       
   {questionsList.data === null ? (
-    <h1 className="text-center text-2xl font-semibold my-8">Loading...</h1>
+    <h1 className="text-center text-2xl font-semibold my-8"><img src="../../assets/Loading.gif" />
+</h1>
   ) : (
     <>
       <button onClick={() => Navigate(-1)} type="button" class="text-white flex items-center gap-2 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"><IoArrowBackCircle /> Back</button>

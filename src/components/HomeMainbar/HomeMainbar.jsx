@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import QuestionList from "./QuestionList";
-import Tweets from "../Tweets/Tweets";
 import Media from "../Media/Media";
+import Loading from "../../assets/Loading.gif";
+import TweetsList from "../Tweets/TweetsList";
 
 const HomeMainbar = () => {
   const location = useLocation();
@@ -11,8 +12,10 @@ const HomeMainbar = () => {
   const navigate = useNavigate();
 
   const questionsList = useSelector((state) => state.questionsReducer);
-  
-  // State to track active tab (Questions, Tweets, Media)
+  const tweetsList = useSelector((state) => state.tweetsReducer);
+  console.log("questionsList", questionsList.data);
+  console.log("tweetsList", tweetsList);
+
   const [activeTab, setActiveTab] = useState("questions");
 
   const checkAuth = () => {
@@ -69,7 +72,7 @@ const HomeMainbar = () => {
       {/* Content Rendering based on the active tab */}
       <div className="mt-4">
         {questionsList.data === null ? (
-          <h1 className="text-xl text-center text-gray-500">Loading...</h1>
+          <img src={Loading} className="text-3xl text-center mx-auto"/>
         ) : (
           <>
             {/* <p className="mb-4 text-lg text-gray-700 dark:text-gray-300">
@@ -86,7 +89,7 @@ const HomeMainbar = () => {
 
             {activeTab === "tweets" && (
               <div className="space-y-4">
-                <Tweets/>
+                <TweetsList tweetsList={tweetsList.data}/>
               </div>
             )}
 

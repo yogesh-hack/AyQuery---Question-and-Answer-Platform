@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import Navbar from "./components/Navbar/Navbar";
 import AllRoutes from "./AllRoutes";
 import { fetchAllQuestions } from "./actions/question";
+import { fetchAllTweets } from "./actions/tweet";
 import { fetchAllUsers } from "./actions/users";
 import { ThemeProvider } from "./context/ThemeContext";
 import { ToastContainer } from "react-toastify";
@@ -32,6 +33,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchAllQuestions());
+    dispatch(fetchAllTweets());
     dispatch(fetchAllUsers());
   }, [dispatch]);
 
