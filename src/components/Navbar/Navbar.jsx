@@ -44,7 +44,7 @@ const Navbar = ({ handleSlideIn }) => {
     <nav className="main-nav fixed top-0 w-full z-10 bg-white dark:bg-gray-800 border-b shadow-xl">
       <div className="navbar flex items-center justify-between p-4">
         {/* Mobile menu button */}
-        <button className="block md:hidden" onClick={handleSlideIn}>
+        <button type="button" className="block md:hidden" onClick={handleSlideIn}>
           <img src={bars} alt="menu" width="20" className="dark:invert" />
         </button>
 

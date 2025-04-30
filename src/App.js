@@ -1,4 +1,4 @@
-import { BrowserRouter as Router ,  useLocation} from "react-router-dom";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Navbar from "./components/Navbar/Navbar";
@@ -9,27 +9,28 @@ import { fetchAllUsers } from "./actions/users";
 import { ThemeProvider } from "./context/ThemeContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css'; // Import NProgress styles
-import '../src/App.css'
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+import "../src/App.css";
+import Footer from "./components/Footer/Footer";
 
-// Component to manage NProgress based on route changes
+// Component to show loader on route change
 function PageLoader() {
   const location = useLocation();
 
   useEffect(() => {
-    // Start the loader when route changes
     NProgress.start();
     return () => {
-      // Complete the loader once the route change completes
       NProgress.done();
     };
   }, [location]);
 
-  return null; // This component doesn't render anything
+  return null;
 }
+
 function App() {
   const dispatch = useDispatch();
+  const [slideIn, setSlideIn] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllQuestions());
@@ -37,22 +38,50 @@ function App() {
     dispatch(fetchAllUsers());
   }, [dispatch]);
 
-  const [slideIn, setSlideIn] = useState(true);
+  // Handle initial sidebar visibility based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      setSlideIn(window.innerWidth >= 768); // Show on desktop, hide on mobile
+    };
 
-  const handleSlideIn = () => {
-    setSlideIn(!slideIn);
-  }
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Handle body scroll locking
+  useEffect(() => {
+    if (slideIn && window.innerWidth < 768) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [slideIn]);
+
+  const handleSlideIn = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    setSlideIn((prev) => !prev);
+  };
+
   return (
     <ThemeProvider>
-    <div className="bg-white dark:bg-black">
-      <Router>
-      <PageLoader />
-        <Navbar handleSlideIn={handleSlideIn} />
-        <AllRoutes slideIn={slideIn} handleSlideIn={handleSlideIn} />
-        
-      </Router>
-    </div>
-    <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+      <div className="bg-white dark:bg-black min-h-screen">
+        <Router>
+          <PageLoader />
+          <Navbar handleSlideIn={handleSlideIn} />
+          <AllRoutes slideIn={slideIn} handleSlideIn={handleSlideIn} />
+          <Footer/>
+        </Router>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+        />
+      </div>
     </ThemeProvider>
   );
 }

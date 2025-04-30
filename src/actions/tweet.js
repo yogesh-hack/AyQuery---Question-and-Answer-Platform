@@ -39,14 +39,14 @@ export const voteTweet = (id, value) => async (dispatch) => {
   }
 };
 
-export const postAnswer = (answerData) => async (dispatch) => {
+export const postComment = (CommentData) => async (dispatch) => {
   try {
-    const { id, noOfAnswers, answerBody, userAnswered } = answerData;
-    const { data } = await api.postAnswer(
+    const { id, noOfComments, CommentBody, userCommented } = CommentData;
+    const { data } = await api.postComment(
       id,
-      noOfAnswers,
-      answerBody,
-      userAnswered
+      noOfComments,
+      CommentBody,
+      userCommented
     );
     dispatch({ type: "POST_COMMENT", payload: data });
     dispatch(fetchAllTweets());
@@ -55,9 +55,9 @@ export const postAnswer = (answerData) => async (dispatch) => {
   }
 };
 
-export const deleteAnswer = (id, answerId, noOfAnswers) => async (dispatch) => {
+export const deleteComment = (id, CommentId, noOfComments) => async (dispatch) => {
   try {
-    await api.deleteAnswer(id, answerId, noOfAnswers);
+    await api.deleteComment(id, CommentId, noOfComments);
     dispatch(fetchAllTweets());
   } catch (error) {
     console.log(error);

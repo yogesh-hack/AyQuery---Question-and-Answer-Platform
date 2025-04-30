@@ -4,13 +4,14 @@ import "../../App.css";
 import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import RightSidebar from "../../components/RightSidebar/RightSidebar";
 import HomeMainbar from "../../components/HomeMainbar/HomeMainbar";
+import Footer from "../../components/Footer/Footer";
 
-const Home = ({ slideIn }) => {
+const Home = ({ slideIn,handleSlideIn }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
     {/* Left Sidebar */}
     <div className="lg:col-span-1 w-full">
-      <LeftSidebar slideIn={slideIn} />
+      <LeftSidebar slideIn={slideIn} handleSlideIn={handleSlideIn} />
     </div>
   
     {/* Main Content Area */}

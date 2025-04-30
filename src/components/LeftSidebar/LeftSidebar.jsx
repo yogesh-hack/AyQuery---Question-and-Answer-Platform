@@ -1,14 +1,16 @@
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaHome, FaHotjar, FaGlobe, FaGamepad, FaQuestionCircle, FaLaptop, FaFilm, FaInfoCircle, FaBriefcase, FaBullhorn, FaBook, FaHandsHelping, FaRegFileAlt } from 'react-icons/fa';
 import { FiUsers } from 'react-icons/fi';
 import { MdPrivacyTip, MdPolicy } from 'react-icons/md';
 import "../LeftSidebar/Sidebar.css"
 
-const LeftSidebar = ({ slideIn, handleSlideIn }) => (
+const LeftSidebar = ({slideIn,handleSlideIn}) => {
+  return (
   <div
     className={`${
       slideIn ? 'translate-x-0' : '-translate-x-full'
-    } fixed left-0 top-24 z-50 w-64 h-full border rounded shadow bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
+    } fixed left-0 top-20 z-50 w-64 h-[calc(100vh-5rem)] border rounded shadow bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
   >
     <nav className="side-nav p-4 overflow-y-auto h-full custom-scrollbar">
       <button onClick={handleSlideIn} className="nav-btn mb-4">
@@ -106,5 +108,5 @@ const LeftSidebar = ({ slideIn, handleSlideIn }) => (
     </nav>
   </div>
 );
-
+}
 export default LeftSidebar;

@@ -51,3 +51,8 @@ export const deleteTweet = (id) =>
 
 export const voteTweet = (id, value) =>
   API.patch(`/tweets/vote/${id}`, { value });
+
+export const postComment= (id, noOfComments, CommentBody, userCommented) =>
+  API.patch(`/tweetcomment/post/${id}`, { noOfComments, CommentBody, userCommented });
+export const deleteComment= (id, CommentId, noOfComments) =>
+  API.patch(`/tweetcomment/delete/${id}`, { CommentId, noOfComments });

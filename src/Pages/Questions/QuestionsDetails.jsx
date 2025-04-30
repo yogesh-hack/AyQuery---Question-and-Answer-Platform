@@ -288,7 +288,6 @@ const formats = [
           placeholder="Write your answer here..."
           style={{ height: '200px', marginBottom: '60px' }}
         />
-        {console.log(Answer)}
         <button
           type="submit"
           className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-150 dark:bg-blue-600 dark:hover:bg-blue-700"
