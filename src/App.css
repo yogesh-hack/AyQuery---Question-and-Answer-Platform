@@ -1,5 +1,7 @@
 .dark {
-  background: #111827;
+  background: 
+    radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(160deg, #0d0e11, #081529);
   color: #ffffff;
 }
 

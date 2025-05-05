@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   postComment
@@ -8,21 +8,22 @@ import TweetComments from './TweetComments';
 import { FaRetweet } from "react-icons/fa";
 import { SlLike } from "react-icons/sl";
 import { MdReplyAll } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Tweets({ tweet }) {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentUserReducer);
-  const location = useLocation();
   const [comment, setComment] = useState("");
   const handlePostComment = () => {
     if (!User) {
-      alert("Please login to post a comment");
+      toast.error("Please login to post a comment");
       Navigate("/Auth");
       return;
     }
 
     if (!comment.trim()) {
-      alert("Comment cannot be empty");
+      toast.error("Comment cannot be empty");
       return;
     }
 
@@ -34,7 +35,7 @@ function Tweets({ tweet }) {
         userCommented: User.result.name,
       })
     );
-    alert("Comment posted successfully");
+    toast.success("Comment posted successfully");
     setComment(""); // clear textarea after posting
   };
 
@@ -128,7 +129,19 @@ function Tweets({ tweet }) {
         </div>
 
       </div>
+      <ToastContainer
+      position="top-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"/>
     </div>
+    
   );
 }
 

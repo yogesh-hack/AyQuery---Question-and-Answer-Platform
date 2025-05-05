@@ -6,6 +6,8 @@ import Tweets from './Tweets'
 import { FaImage } from "react-icons/fa";
 import { MdEmojiEmotions } from "react-icons/md";
 import { LuSettings2 } from "react-icons/lu";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const TweetsList = ({ tweetsList }) => {
   const [tweetTitle, setTweetTitle] = useState("");
   const [tweetBody, setTweetBody] = useState("");
@@ -19,7 +21,7 @@ const TweetsList = ({ tweetsList }) => {
     e.preventDefault();
 
     if (!User) {
-      alert("Please login to post a tweet");
+      toast.error("Please login to post a tweet");
       return;
     }
 
@@ -37,7 +39,7 @@ const TweetsList = ({ tweetsList }) => {
         )
       );
     } else {
-      alert("Please Write a tweet");
+      toast.error("Please Write a tweet");
     }
     setTweetBody("");
   };

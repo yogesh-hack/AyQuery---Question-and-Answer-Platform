@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Navbar from "./components/Navbar/Navbar";
@@ -13,6 +13,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import "../src/App.css";
 import Footer from "./components/Footer/Footer";
+import { useLocation } from "react-router-dom";
 
 // Component to show loader on route change
 function PageLoader() {
@@ -28,9 +29,11 @@ function PageLoader() {
   return null;
 }
 
-function App() {
+// Component that goes inside Router
+function AppContent() {
   const dispatch = useDispatch();
   const [slideIn, setSlideIn] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(fetchAllQuestions());
@@ -38,19 +41,15 @@ function App() {
     dispatch(fetchAllUsers());
   }, [dispatch]);
 
-  // Handle initial sidebar visibility based on screen size
   useEffect(() => {
     const handleResize = () => {
-      setSlideIn(window.innerWidth >= 768); // Show on desktop, hide on mobile
+      setSlideIn(window.innerWidth >= 768);
     };
-
-    handleResize(); // Initial check
+    handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Handle body scroll locking
   useEffect(() => {
     if (slideIn && window.innerWidth < 768) {
       document.body.style.overflow = "hidden";
@@ -67,14 +66,24 @@ function App() {
     setSlideIn((prev) => !prev);
   };
 
+  const hideLayout = location.pathname.startsWith("/Auth") || location.pathname === "/verify-email";
+
+  return (
+    <>
+      <PageLoader />
+      {!hideLayout && <Navbar handleSlideIn={handleSlideIn} />}
+      <AllRoutes slideIn={slideIn} handleSlideIn={handleSlideIn} />
+      {!hideLayout && <Footer />}
+    </>
+  );
+}
+
+function App() {
   return (
     <ThemeProvider>
       <div className="bg-white dark:bg-black min-h-screen">
         <Router>
-          <PageLoader />
-          <Navbar handleSlideIn={handleSlideIn} />
-          <AllRoutes slideIn={slideIn} handleSlideIn={handleSlideIn} />
-          <Footer/>
+          <AppContent />
         </Router>
         <ToastContainer
           position="top-right"

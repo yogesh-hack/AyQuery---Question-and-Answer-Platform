@@ -1,7 +1,7 @@
 const authReducer = (state = { data: null }, action) => {
   switch (action.type) {
     case "AUTH":
-      localStorage.setItem("Profile", JSON.stringify({ ...action?.data }));
+      localStorage.setItem("Profile", JSON.stringify({ ...action?.data?.user }));
       return { ...state, data: action?.data };
     case "LOGOUT":
       localStorage.clear();

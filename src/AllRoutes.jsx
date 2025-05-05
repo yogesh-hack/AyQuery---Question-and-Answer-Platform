@@ -12,7 +12,7 @@ import UserProfile from "./Pages/UserProfile/UserProfile";
 import Video from "./Pages/WatchVideo/video";
 import Aboutus from "./Pages/Aboutus/Aboutus";
 import Article from "./Pages/Articles/Article";
-import Tweets from "./components/Tweets/Tweets";
+import VerifyEmail from "./Pages/Auth/VerifyEmail";
 
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (
@@ -22,6 +22,7 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
         element={<Home slideIn={slideIn} handleSlideIn={handleSlideIn} />}
       />
       <Route path="/Auth" element={<Auth />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/AskQuestion" element={<AskQuestion />} />
       <Route
         path="/Questions"
