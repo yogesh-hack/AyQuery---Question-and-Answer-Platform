@@ -40,7 +40,7 @@ const UserProfile = ({ slideIn, handleSlideIn }) => {
             >
               {currentProfile?.name.charAt(0).toUpperCase()}
             </Avatar>
-            {currentUser?.result._id === id && (
+            {currentUser?._id === id && (
               <button 
               type="button"
               onClick={() => setSwitch(true)}

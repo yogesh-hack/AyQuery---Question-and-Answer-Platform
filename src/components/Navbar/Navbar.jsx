@@ -93,10 +93,10 @@ const Navbar = ({ handleSlideIn }) => {
                 className="dark:bg-gray-700"
               >
                 <Link
-                  to={`/Users/${User.result._id}`}
+                  to={`/Users/${User._id}`}
                   style={{ color: "white", textDecoration: "none" }}
                 >
-                  {User.result.name.charAt(0).toUpperCase()}
+                  {User.name.charAt(0).toUpperCase()}
                 </Link>
               </Avatar>
               {/* Log Out button */}

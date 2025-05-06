@@ -13,6 +13,7 @@ const Auth = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,22 +25,29 @@ const Auth = () => {
     setPassword("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email && !password) {
       toast.error("Enter email and password");
       return;
     }
-    if (isSignup) {
-      if (!name) {
-        toast.error("Enter a name to continue");
-        return;
+    if (isSignup && !name) {
+      toast.error("Enter a name to continue");
+      return;
+    }
+  
+    setLoading(true);
+    try {
+      if (isSignup) {
+        await dispatch(signup({ name, email, password }, navigate));
+      } else {
+        await dispatch(login({ email, password }, navigate));
       }
-      dispatch(signup({ name, email, password }, navigate));
-    } else {
-      dispatch(login({ email, password }, navigate));
+    } finally {
+      setLoading(false);
     }
   };
+  
 
   return (
   
@@ -159,11 +167,24 @@ const Auth = () => {
         </div>
   
         <button
-          type="submit"
-          className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition"
-        >
-          {isSignup ? "Sign up" : "Log in"}
-        </button>
+  type="submit"
+  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition flex items-center justify-center"
+  disabled={loading}
+>
+  {loading ? (
+    <svg
+      className="animate-spin h-5 w-5 text-white"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+    </svg>
+  ) : (
+    isSignup ? "Sign up" : "Log in"
+  )}
+</button>
       </form>
   
       <p className="text-sm text-center mt-6 text-gray-700 dark:text-gray-300">

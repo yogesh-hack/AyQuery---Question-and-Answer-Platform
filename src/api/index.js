@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://ayquery-api.vercel.app/api",
+  baseURL: "http://localhost:5000/api",
   headers: {
     'apikey': 'MY_MASTER_KEY_1234'
   }
@@ -26,6 +26,7 @@ API.interceptors.request.use((req) => {
 export const logIn = (authData) => API.post("/user/login", authData);
 export const signUp = (authData) => API.post("/user/signup", authData);
 export const OtpVerify = (authData) => API.post("/user/verify-otp", authData);
+export const resendOtp = (authData) => API.post("/user/resend-otp", authData);
 
 export const postQuestion = (questionData) =>
   API.post("/questions/Ask", questionData);

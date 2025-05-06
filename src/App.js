@@ -14,6 +14,7 @@ import "nprogress/nprogress.css";
 import "../src/App.css";
 import Footer from "./components/Footer/Footer";
 import { useLocation } from "react-router-dom";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 // Component to show loader on route change
 function PageLoader() {
@@ -66,7 +67,7 @@ function AppContent() {
     setSlideIn((prev) => !prev);
   };
 
-  const hideLayout = location.pathname.startsWith("/Auth") || location.pathname === "/verify-email";
+  const hideLayout = location.pathname.startsWith("/Auth") || location.pathname === "/verify-email" || location.pathname === "/error";
 
   return (
     <>
@@ -83,7 +84,9 @@ function App() {
     <ThemeProvider>
       <div className="bg-white dark:bg-black min-h-screen">
         <Router>
+          <ErrorBoundary>
           <AppContent />
+          </ErrorBoundary>
         </Router>
         <ToastContainer
           position="top-right"

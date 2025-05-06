@@ -8,8 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 export const signup = (authData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.signUp(authData);
+    navigate("/verify-email", { state: { email: authData.email } });    
     toast.success("OTP sent to your email");
-    navigate("/verify-email", { state: { email: authData.email } });
     dispatch({ type: "AUTH", data });
   } catch (error) {
     console.log(error);
@@ -19,14 +19,12 @@ export const signup = (authData, navigate) => async (dispatch) => {
 
 export const verifyEmail = (verificationData, navigate) => async (dispatch) => {
   try {
-    console.log(verificationData)
     const { data } = await api.OtpVerify(verificationData);
     dispatch({ type: "AUTH", data });
     localStorage.setItem("Profile", JSON.stringify(data.user));
-    console.log(data.user)
+    toast.success("Email verified successfully!");
     dispatch(setCurrentUser(data.user));
     dispatch(fetchAllUsers()); 
-    toast.success("Email verified successfully!");
     navigate("/");
   } catch (error) {
     console.log(error);
@@ -44,5 +42,16 @@ export const login = (authData, navigate) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     toast.error("Login failed. Incorrect credentials.");
+  }
+};
+
+export const resendOtp = (email) => async (dispatch) => {
+  try {
+    const { data } = await api.resendOtp({ email });
+    toast.success("OTP resent successfully!");
+    dispatch({ type: "AUTH", data });
+  } catch (err) {
+    console.log(err);
+    toast.error("Failed to resend OTP.");
   }
 };

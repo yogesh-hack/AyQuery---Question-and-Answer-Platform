@@ -13,6 +13,7 @@ import Video from "./Pages/WatchVideo/video";
 import Aboutus from "./Pages/Aboutus/Aboutus";
 import Article from "./Pages/Articles/Article";
 import VerifyEmail from "./Pages/Auth/VerifyEmail";
+import ErrorPage from "./components/ErrorPage";
 
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (
@@ -24,6 +25,7 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
       <Route path="/Auth" element={<Auth />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/AskQuestion" element={<AskQuestion />} />
+      <Route path="/error" element={<ErrorPage/>} />
       <Route
         path="/Questions"
         element={<Questions slideIn={slideIn} handleSlideIn={handleSlideIn} />}
