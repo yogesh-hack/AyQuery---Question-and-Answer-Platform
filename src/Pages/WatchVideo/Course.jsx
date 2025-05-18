@@ -1,27 +1,26 @@
 import React from "react";
-
-import "../../App.css";
 import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import RightSidebar from "../../components/RightSidebar/RightSidebar";
-import Mainblogs from "../../components/Blogs/Mainblogs";
-import Blogs from "../../components/Blogs/Blogs";
+import Videoplayer from "../../components/VideoPlayer/Videoplayer";
+import sample from '../../assets/sample.mp4'
+import sample2 from '../../assets/sample2.mp4'
+import CourseSide from "../../components/VideoPlayer/CourseSide";
+import CoursesGrid from "../../components/VideoPlayer/CoursesList";
 
-const Article = ({ slideIn }) => {
+const Course = ({ slideIn, handleSlideIn }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
     {/* Left Sidebar */}
     <div className="lg:col-span-1 w-full">
-      <LeftSidebar slideIn={slideIn} />
+      <CourseSide/>
     </div>
   
     {/* Main Content Area */}
     <div className="lg:col-span-3 w-full mt-20">
-      <Blogs/>
+      <Videoplayer/>
     </div>
   </div>
-  
-  
   );
 };
 
-export default Article;
+export default Course;

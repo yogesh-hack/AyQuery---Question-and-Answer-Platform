@@ -14,6 +14,11 @@ import Aboutus from "./Pages/Aboutus/Aboutus";
 import Article from "./Pages/Articles/Article";
 import VerifyEmail from "./Pages/Auth/VerifyEmail";
 import ErrorPage from "./components/ErrorPage";
+import Store from "./Pages/Stores/Store";
+import StoreDetails from "./Pages/Stores/StoreDetails";
+import Mainblogs from "./components/Blogs/Mainblogs";
+import VideoContent from "./components/VideoPlayer/VideoContent";
+import Course from "./Pages/WatchVideo/Course";
 
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (
@@ -26,6 +31,18 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/AskQuestion" element={<AskQuestion />} />
       <Route path="/error" element={<ErrorPage/>} />
+      <Route
+        path="/Store"
+        element={
+          <Store slideIn={slideIn} handleSlideIn={handleSlideIn} />
+        }
+      />
+      <Route
+        path="/Store/detail/:id"
+        element={
+          <StoreDetails slideIn={slideIn} handleSlideIn={handleSlideIn} />
+        }
+      />
       <Route
         path="/Questions"
         element={<Questions slideIn={slideIn} handleSlideIn={handleSlideIn} />}
@@ -56,6 +73,7 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
           <Article slideIn={slideIn} handleSlideIn={handleSlideIn} />
         }
       />
+      <Route path="/Articles/blog/:slug" element={<Mainblogs />} />
       <Route
         path="/Aboutus"
         element={
@@ -63,11 +81,13 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
         }
       />
       <Route
-        path="/video"
+        path="/Courses"
         element={
           <Video slideIn={slideIn} handleSlideIn={handleSlideIn}/>
         }
       />
+        <Route path="/Courses/:courseTitle/:contentSlug" element={<VideoContent />} />
+       <Route path="/Courses/:courseTitle" element={<Course />} />
     </Routes>
   );
 };

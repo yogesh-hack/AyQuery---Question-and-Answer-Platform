@@ -9,7 +9,7 @@ import { setCurrentUser } from "../../actions/currentUser";
 import bars from "../../assets/bars-solid.svg";
 import { useTheme } from "../../context/ThemeContext";
 import { MdLightMode, MdDarkMode, MdKeyboardArrowDown } from "react-icons/md";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -41,7 +41,7 @@ const Navbar = ({ handleSlideIn }) => {
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   return (
-    <nav className="main-nav fixed top-0 w-full z-10 bg-white dark:bg-gray-800 border-b shadow-xl">
+    <nav className="main-nav fixed top-0 w-full z-10 bg-transparent border-b shadow-xl backdrop-blur-lg">
       <div className="navbar flex items-center justify-between p-4">
         {/* Mobile menu button */}
         <button type="button" className="block md:hidden" onClick={handleSlideIn}>
@@ -64,8 +64,8 @@ const Navbar = ({ handleSlideIn }) => {
           <Link to="/" className="nav-item text-gray-900 dark:text-gray-300">
             For Teams
           </Link>
-          <Link to="/video" className="nav-item text-gray-900 dark:text-gray-300">
-            Watch Video
+          <Link to="/Courses" className="nav-item text-gray-900 dark:text-gray-300">
+            Courses
           </Link>
           <Link to="/Articles" className="nav-item text-gray-900 dark:text-gray-300">
             Articles
@@ -96,7 +96,7 @@ const Navbar = ({ handleSlideIn }) => {
                   to={`/Users/${User._id}`}
                   style={{ color: "white", textDecoration: "none" }}
                 >
-                  {User.name.charAt(0).toUpperCase()}
+                  {User?.name?.charAt(0).toUpperCase()}
                 </Link>
               </Avatar>
               {/* Log Out button */}

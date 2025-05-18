@@ -31,6 +31,7 @@ export const resendOtp = (authData) => API.post("/user/resend-otp", authData);
 export const postQuestion = (questionData) =>
   API.post("/questions/Ask", questionData);
 export const getAllQuestions = () => API.get("/questions/get");
+export const getAllStores = () => API.get("/stores/get");
 export const getAllTweets = () => API.get("/tweets/get");
 export const deleteQuestion = (id) => API.delete(`/questions/delete/${id}`);
 export const voteQuestion = (id, value) =>

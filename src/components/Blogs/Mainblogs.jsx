@@ -1,13 +1,162 @@
 import React from 'react'
+import { Link, useParams } from 'react-router-dom';
 
 function Mainblogs() {
-  return (
-    <>
-    <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
-  <div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
-      <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-          <header class="mb-4 lg:mb-6 not-format">
-              <address class="flex items-center mb-6 not-italic">
+    const { slug } = useParams();
+    const articleTree = [
+        {
+            title: "Getting Started",
+            children: [
+                { title: "Introduction", slug: "introduction" },
+                { title: "Installation", slug: "installation" },
+                { title: "Configuration", slug: "configuration" }
+            ]
+        },
+        {
+            title: "Core Concepts",
+            children: [
+                { title: "Components", slug: "components" },
+                { title: "Styling", slug: "styling" },
+                { title: "State Management", slug: "state-management" }
+            ]
+        },
+        {
+            title: "Advanced Guides",
+            children: [
+                { title: "Performance", slug: "performance" },
+                { title: "Testing", slug: "testing" },
+                { title: "Deployment", slug: "deployment" }
+            ]
+        }
+    ];
+
+    return (
+        <>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                {/* Left Sidebar */}
+                <div className="lg:col-span-1 w-full ml-2">
+                    <div className="sticky top-20 pt-8">
+                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+                                Article Directory
+                            </h2>
+                            <div className="space-y-2">
+                                {articleTree.map((section, index) => (
+                                    <div key={index} className="mb-4">
+                                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+                                            {section.title}
+                                        </h3>
+                                        <ul className="space-y-1">
+                                            {section.children.map((article, idx) => (
+                                                <li key={idx}>
+                                                    <a
+                                                        href={`/blog/${article.slug}`}
+                                                        className={`flex items-center px-3 py-2 text-sm rounded-md transition-colors ${slug === article.slug
+                                                            ? 'bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400 font-medium'
+                                                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                                            }`}
+                                                    >
+                                                        <svg
+                                                            className="mr-2 h-4 w-4 flex-shrink-0"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={2}
+                                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                                            />
+                                                        </svg>
+                                                        {article.title}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            {/* Recent articles section */}
+                            <div className="mt-8">
+                                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+                                    Recently Viewed
+                                </h3>
+                                <ul className="space-y-2">
+                                    <li>
+                                        <a href="#" className="flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                                            <span className="truncate">Best practices for successful prototypes</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                                            <span className="truncate">Getting started with Flowbite</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            {/* Tags section */}
+                            <div className="mt-8">
+                                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+                                    Popular Tags
+                                </h3>
+                                <div className="flex flex-wrap gap-2">
+                                    {['Design', 'Development', 'UI/UX', 'JavaScript', 'React', 'Tailwind'].map((tag, i) => (
+                                        <a
+                                            key={i}
+                                            href="#"
+                                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+                                        >
+                                            {tag}
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+     
+       {/* Main Content Area */}
+       <div className="lg:col-span-3 w-full mt-28">
+    <main class="pt-8 pb-16 lg:pt-8 lg:pb-24 rounded-lg bg-white dark:bg-gray-900 antialiased">
+  <div class="flex justify-between mx-auto max-w-screen-xl ">
+      <article class="mx-auto w-full px-4 format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+      <header className="mb-4 lg:mb-6 not-format">
+                    {/* Back Button */}
+                    <div className="mb-4">
+                        <Link
+                            to="/Articles"
+                            className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                        >
+                            <svg 
+                                className="w-4 h-4 mr-2" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path 
+                                    strokeLinecap="round" 
+                                    strokeLinejoin="round" 
+                                    strokeWidth="2" 
+                                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                                />
+                            </svg>
+                            Back to Articles
+                        </Link>
+                    </div>
+                    
+                    <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        Blog Title for: {slug.replace(/-/g, " ")}
+                    </div>
+                    <h1 className="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
+                        Best practices for successful prototypes
+                    </h1>
+                </header>
+
+          <address class="flex items-center mb-6 not-italic">
                   <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                       <img class="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Jese Leos"/>
                       <div>
@@ -17,8 +166,6 @@ function Mainblogs() {
                       </div>
                   </div>
               </address>
-              <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">Best practices for successful prototypes</h1>
-          </header>
           <p class="lead">Flowbite is an open-source library of UI components built with the utility-first
               classes from Tailwind CSS. It also includes interactive elements such as dropdowns, modals,
               datepickers.</p>
@@ -97,69 +244,102 @@ function Mainblogs() {
               <p>Flowbite is just awesome. It contains tons of predesigned components and pages starting from
                   login screen to complex dashboard. Perfect choice for your next SaaS application.</p>
           </blockquote>
-          <h4>Code example</h4>
-          <p>A serif is a small shape or projection that appears at the beginning or end of a stroke on a letter.
-              Typefaces with serifs are called serif typefaces. Serif fonts are classified as one of the
-              following:</p>
-          <pre><code class="language-html">&lt;dl class="grid grid-cols-2 gap-8 max-w-screen-md text-gray-900 sm:grid-cols-3 dark:text-white"&gt;
-&lt;div class="flex flex-col justify-center items-center"&gt;
-  &lt;dt class="mb-2 text-3xl font-extrabold"&gt;73M+&lt;/dt&gt;
-  &lt;dd class="text-lg font-normal text-gray-500 dark:text-gray-400"&gt;developers&lt;/dd&gt;
-&lt;/div&gt;
-&lt;div class="flex flex-col justify-center items-center"&gt;
-  &lt;dt class="mb-2 text-3xl font-extrabold"&gt;1B+&lt;/dt&gt;
-  &lt;dd class="text-lg font-normal text-gray-500 dark:text-gray-400"&gt;contributors&lt;/dd&gt;
-&lt;/div&gt;
-&lt;div class="flex flex-col justify-center items-center"&gt;
-  &lt;dt class="mb-2 text-3xl font-extrabold"&gt;4M+&lt;/dt&gt;
-  &lt;dd class="text-lg font-normal text-gray-500 dark:text-gray-400"&gt;organizations&lt;/dd&gt;
-&lt;/div&gt;
-&lt;/dl&gt;
-</code></pre>
-          <h4>Table example</h4>
-          <p>A serif is a small shape or projection that appears at the beginning or end of a stroke on a letter.
-          </p>
-          <table>
-              <thead>
-                  <tr>
-                      <th>Country</th>
-                      <th>Date &amp; Time</th>
-                      <th>Amount</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>United States</td>
-                      <td>April 21, 2021</td>
-                      <td><strong>$2,300</strong></td>
-                  </tr>
-                  <tr>
-                      <td>Canada</td>
-                      <td>May 31, 2021</td>
-                      <td><strong>$300</strong></td>
-                  </tr>
-                  <tr>
-                      <td>United Kingdom</td>
-                      <td>June 3, 2021</td>
-                      <td><strong>$2,500</strong></td>
-                  </tr>
-                  <tr>
-                      <td>Australia</td>
-                      <td>June 23, 2021</td>
-                      <td><strong>$3,543</strong></td>
-                  </tr>
-                  <tr>
-                      <td>Germany</td>
-                      <td>July 6, 2021</td>
-                      <td><strong>$99</strong></td>
-                  </tr>
-                  <tr>
-                      <td>France</td>
-                      <td>August 23, 2021</td>
-                      <td><strong>$2,540</strong></td>
-                  </tr>
-              </tbody>
-          </table>
+          <div className="space-y-8">
+  {/* Code Example Section */}
+  <div>
+    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Code Example</h4>
+    <p className="mb-4 text-gray-700 dark:text-gray-300">
+      A serif is a small shape or projection that appears at the beginning or end of a stroke on a letter.
+      Typefaces with serifs are called serif typefaces. Serif fonts are classified as one of the following:
+    </p>
+    
+    <div className="relative rounded-lg overflow-hidden bg-gray-800 dark:bg-gray-700 mb-6">
+      <div className="flex items-center px-4 py-2 bg-gray-700 dark:bg-gray-800">
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 rounded-full bg-red-500"></div>
+          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div className="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+        <span className="ml-2 text-xs text-gray-300">HTML</span>
+      </div>
+      <pre className="p-4 overflow-x-auto text-sm text-gray-100">
+        <code className="language-html">
+          {`<dl class="grid grid-cols-2 gap-8 max-w-screen-md text-gray-900 sm:grid-cols-3 dark:text-white">
+  <div class="flex flex-col justify-center items-center">
+    <dt class="mb-2 text-3xl font-extrabold">73M+</dt>
+    <dd class="text-lg font-normal text-gray-500 dark:text-gray-400">developers</dd>
+  </div>
+  <div class="flex flex-col justify-center items-center">
+    <dt class="mb-2 text-3xl font-extrabold">1B+</dt>
+    <dd class="text-lg font-normal text-gray-500 dark:text-gray-400">contributors</dd>
+  </div>
+  <div class="flex flex-col justify-center items-center">
+    <dt class="mb-2 text-3xl font-extrabold">4M+</dt>
+    <dd class="text-lg font-normal text-gray-500 dark:text-gray-400">organizations</dd>
+  </div>
+</dl>`}
+        </code>
+      </pre>
+      <button className="absolute top-3 right-3 p-1 text-gray-400 hover:text-white">
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  {/* Table Example Section */}
+  <div>
+    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Table Example</h4>
+    <p className="mb-4 text-gray-700 dark:text-gray-300">
+      A serif is a small shape or projection that appears at the beginning or end of a stroke on a letter.
+    </p>
+    
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg mb-6">
+      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" className="px-6 py-3">Country</th>
+            <th scope="col" className="px-6 py-3">Date & Time</th>
+            <th scope="col" className="px-6 py-3">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">United States</td>
+            <td className="px-6 py-4">April 21, 2021</td>
+            <td className="px-6 py-4 font-bold">$2,300</td>
+          </tr>
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Canada</td>
+            <td className="px-6 py-4">May 31, 2021</td>
+            <td className="px-6 py-4 font-bold">$300</td>
+          </tr>
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">United Kingdom</td>
+            <td className="px-6 py-4">June 3, 2021</td>
+            <td className="px-6 py-4 font-bold">$2,500</td>
+          </tr>
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Australia</td>
+            <td className="px-6 py-4">June 23, 2021</td>
+            <td className="px-6 py-4 font-bold">$3,543</td>
+          </tr>
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Germany</td>
+            <td className="px-6 py-4">July 6, 2021</td>
+            <td className="px-6 py-4 font-bold">$99</td>
+          </tr>
+          <tr className="bg-white dark:bg-gray-800">
+            <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">France</td>
+            <td className="px-6 py-4">August 23, 2021</td>
+            <td className="px-6 py-4 font-bold">$2,540</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
           <h3>Best practices for setting up your prototype</h3>
           <p><strong>Low fidelity or high fidelity?</strong> Fidelity refers to how close a prototype will be to
               the real deal. If you’re simply preparing a quick visual aid for a presentation, a low-fidelity
@@ -391,8 +571,9 @@ function Mainblogs() {
       </article>
   </div>
 </main>
-
-<aside aria-label="Related articles" class="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800">
+</div>
+</div>
+<aside aria-label="Related articles" class="py-8 mt-5 lg:py-24 bg-gray-50 dark:bg-gray-800">
   <div class="px-4 mx-auto max-w-screen-xl">
       <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">Related articles</h2>
       <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -447,8 +628,8 @@ function Mainblogs() {
       </div>
   </div>
 </aside>
-
-<section class="bg-white dark:bg-gray-900">
+       
+<section class="bg-white w-full dark:bg-gray-900">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="mx-auto max-w-screen-md sm:text-center">
           <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-white">Sign up for our newsletter</h2>
@@ -475,6 +656,7 @@ function Mainblogs() {
   </div>
 </section>
     </>
+
   )
 }
 

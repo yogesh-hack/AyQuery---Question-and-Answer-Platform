@@ -15,6 +15,7 @@ import "../src/App.css";
 import Footer from "./components/Footer/Footer";
 import { useLocation } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { fetchAllStores } from "./actions/store";
 
 // Component to show loader on route change
 function PageLoader() {
@@ -40,6 +41,7 @@ function AppContent() {
     dispatch(fetchAllQuestions());
     dispatch(fetchAllTweets());
     dispatch(fetchAllUsers());
+    dispatch(fetchAllStores());
   }, [dispatch]);
 
   useEffect(() => {
