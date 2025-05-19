@@ -19,6 +19,7 @@ import StoreDetails from "./Pages/Stores/StoreDetails";
 import Mainblogs from "./components/Blogs/Mainblogs";
 import VideoContent from "./components/VideoPlayer/VideoContent";
 import Course from "./Pages/WatchVideo/Course";
+import LiveCodingPage from "./Pages/CodeEditor/LiveCodingPage";
 
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (
@@ -80,6 +81,7 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
           <Aboutus/>
         }
       />
+        <Route path="/editor/:roomId" element={<LiveCodingPage />} />
       <Route
         path="/Courses"
         element={

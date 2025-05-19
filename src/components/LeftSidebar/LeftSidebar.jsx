@@ -41,6 +41,10 @@ const LeftSidebar = ({slideIn,handleSlideIn}) => {
           <FaGlobe className="mr-3" />
           <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Internet Culture (Viral)</p>
         </NavLink>
+        <NavLink to="/editor/hsiuft87wte87stf" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>
+          <FaGlobe className="mr-3" />
+          <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Code Editor</p>
+        </NavLink>
         <NavLink to="/games" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>
           <FaGamepad className="mr-3" />
           <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Games</p>
