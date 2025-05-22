@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaHotjar, FaGlobe, FaGamepad, FaQuestionCircle, FaLaptop, FaFilm, FaInfoCircle, FaBriefcase, FaBullhorn, FaBook, FaHandsHelping, FaRegFileAlt } from 'react-icons/fa';
+import { FaHome, FaHotjar, FaGlobe, FaGamepad, FaQuestionCircle, FaLaptop, FaFilm, FaInfoCircle, FaBriefcase, FaBullhorn, FaBook, FaHandsHelping, FaRegFileAlt, FaCode } from 'react-icons/fa';
 import { FiUsers } from 'react-icons/fi';
 import { MdPrivacyTip, MdPolicy } from 'react-icons/md';
 import "../LeftSidebar/Sidebar.css"
@@ -10,7 +10,7 @@ const LeftSidebar = ({slideIn,handleSlideIn}) => {
   <div
     className={`${
       slideIn ? 'translate-x-0' : '-translate-x-full'
-    } fixed left-0 top-20 z-50 w-64 h-[calc(100vh-5rem)] border rounded shadow bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
+    } fixed left-0 top-20 z-50 w-64 h-[calc(100vh-5rem)] border rounded shadow bg-white dark:bg-[#0d1117] transition-transform duration-300 ease-in-out`}
   >
     <nav className="side-nav p-4 overflow-y-auto h-full custom-scrollbar">
       <button onClick={handleSlideIn} className="nav-btn mb-4">
@@ -41,8 +41,8 @@ const LeftSidebar = ({slideIn,handleSlideIn}) => {
           <FaGlobe className="mr-3" />
           <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Internet Culture (Viral)</p>
         </NavLink>
-        <NavLink to="/editor/hsiuft87wte87stf" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>
-          <FaGlobe className="mr-3" />
+        <NavLink to="/room-select" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>
+          <FaCode className="mr-3" />
           <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Code Editor</p>
         </NavLink>
         <NavLink to="/games" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>

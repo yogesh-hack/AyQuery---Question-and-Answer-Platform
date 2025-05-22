@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import QuestionList from "./QuestionList";
 import Media from "../Media/Media";
 import Loading from "../../assets/Loading.gif";
 import TweetsList from "../Tweets/TweetsList";
 
-const HomeMainbar = () => {
+const TweetMain = () => {
   const location = useLocation();
   const user = 1;  // Mock user; replace with actual user logic
   const navigate = useNavigate();
 
-  const questionsList = useSelector((state) => state.questionsReducer);
+const tweetsList = useSelector((state) => state.tweetsReducer);
+  console.log("tweetsList", tweetsList);
 
-  const [activeTab, setActiveTab] = useState("Popular");
-const tabs = ["Popular", "Newest", "Following"];
+  const [activeTab, setActiveTab] = useState("Trending");
+const tabs = ["Trending", "Newest", "Following"];
   const checkAuth = () => {
     if (user === null) {
       alert("Login or signup to ask a question");
@@ -49,29 +49,19 @@ const tabs = ["Popular", "Newest", "Following"];
         </button>
       ))}
     </div>
-        <button
-          onClick={checkAuth}
-          className="px-4 py-2 float-right text-white rounded-lg shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-        >
-          Ask Question
-        </button>
       </div>
 
       {/* Content Rendering based on the active tab */}
       <div className="mt-4">
-        {questionsList.data === null ? (
+        {tweetsList.data === null ? (
           <img src={Loading} className="text-3xl text-center mx-auto"/>
         ) : (
           <>
-            {/* <p className="mb-4 text-lg text-gray-700 dark:text-gray-300">
-              {questionsList.data.length} questions
-            </p> */}
-              
             
             {/* Conditionally render content */}
-            {activeTab === "Popular" && (
+            {activeTab === "Trending" && (
               <div className="space-y-4">
-                <QuestionList questionsList={questionsList.data} />
+                 <TweetsList tweetsList={tweetsList.data}/>
               </div>
             )}
 
@@ -93,4 +83,4 @@ const tabs = ["Popular", "Newest", "Following"];
   );
 };
 
-export default HomeMainbar;
+export default TweetMain;

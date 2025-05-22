@@ -19,7 +19,7 @@ function Media() {
     "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg",
   ];
   return (
-    <div class="container mx-auto mt-10">
+    <div class="container mx-auto">
      <header className="flex items-center justify-between py-2 shadow-sm">
       <div className="flex items-center space-x-6">
         <input
@@ -44,7 +44,11 @@ function Media() {
         </button>
       </div>
     </header>
-    
+        
+      {/* Tab navigation */}
+      <div className="p-3 flex items-center justify-between  border-b border-solid border-grey-light">
+      </div>
+
     <h1 className="text-2xl font-semibold">Stories</h1>
   <div class="flex flex-wrap md:flex-nowrap overflow-x-auto no-scrollbar space-x-4 md:space-x-0 py-10">
     
@@ -110,7 +114,7 @@ function Media() {
   {imageUrls.map((url, index) => (
     <div className="flex items-start gap-2.5" key={index}>
       <div className="flex flex-col gap-1 w-full">
-        <div className="flex flex-col w-full leading-1.5 p-4 border border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700 dark:border-gray-700">
+        <div className="flex flex-col w-full leading-1.5 p-4 border border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-[#0d1117] dark:border-gray-800">
           
           {/* Header */}
           <div className="flex items-start justify-between mb-2">

@@ -69,7 +69,7 @@ function AppContent() {
     setSlideIn((prev) => !prev);
   };
 
-  const hideLayout = location.pathname.startsWith("/Auth") || location.pathname === "/verify-email" || location.pathname === "/error";
+  const hideLayout = location.pathname.startsWith("/Auth") || location.pathname === "/verify-email" || location.pathname === "/error" || location.pathname.startsWith("/test");
 
   return (
     <>
@@ -80,6 +80,18 @@ function AppContent() {
     </>
   );
 }
+// In your main index.js or App.js
+const ignoreResizeObserverError = () => {
+  const originalError = console.error;
+  console.error = (...args) => {
+    if (/ResizeObserver/.test(args[0])) {
+      return;
+    }
+    originalError.apply(console, args);
+  };
+};
+
+ignoreResizeObserverError();
 
 function App() {
   return (

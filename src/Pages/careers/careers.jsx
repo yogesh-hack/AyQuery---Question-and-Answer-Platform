@@ -5,18 +5,15 @@ import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import RightSidebar from "../../components/RightSidebar/RightSidebar";
 import Mainblogs from "../../components/Blogs/Mainblogs";
 import Blogs from "../../components/Blogs/Blogs";
+import JobBoard from "../../components/Jobs/JobBoard";
 
-const Article = ({ slideIn }) => {
+const Careers = ({ slideIn }) => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-    {/* Left Sidebar */}
-    <div className="lg:col-span-1 w-full">
-      <LeftSidebar slideIn={slideIn} />
-    </div>
+    <div className="grid gap-6">
   
     {/* Main Content Area */}
-    <div className="lg:col-span-3 w-full">
-      <Blogs/>
+    <div className="w-full mt-20">
+      <JobBoard/>
     </div>
   </div>
   
@@ -24,4 +21,4 @@ const Article = ({ slideIn }) => {
   );
 };
 
-export default Article;
+export default Careers;

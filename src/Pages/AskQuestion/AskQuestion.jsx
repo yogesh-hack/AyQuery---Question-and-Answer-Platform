@@ -34,6 +34,7 @@ const AskQuestion = () => {
 
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentUserReducer);
+  console.log(User);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {

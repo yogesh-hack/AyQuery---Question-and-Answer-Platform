@@ -1,7 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { FiPlus, FiEdit } from 'react-icons/fi';
 
 function Blogs() {
+  const [userArticles, setUserArticles] = useState([]);
+  const navigate = useNavigate();
   // Sample article data
   const articles = [
     {
@@ -39,15 +42,59 @@ function Blogs() {
   ];
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-12">
-      <h2 className='text-gray-900 dark:text-white text-4xl mb-8 font-bold'>Read Latest Articles</h2>
+    <div className="px-4 mt-20 sm:px-6 lg:px-8 py-12">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className='text-gray-900 dark:text-white text-4xl font-bold'>Read Latest Articles</h2>
+        <button
+          onClick={() => navigate('/articles/write')}
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+        >
+          <FiPlus />
+          Write Article
+        </button>
+      </div>
       
+      {/* Latest Articles */}
       <div className="mb-12">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {articles.map((article) => (
             <ArticleCard key={article.id} article={article} />
           ))}
         </div>
+      </div>
+
+      {/* Your Published Articles */}
+      <div className="mt-16">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className='text-gray-900 dark:text-white text-3xl font-bold'>Your Published Articles</h2>
+          <button
+            onClick={() => navigate('/articles/me')}
+            className="flex items-center gap-2 px-4 py-2 text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+          >
+            <FiEdit />
+            View All
+          </button>
+        </div>
+        
+        {userArticles.length > 0 ? (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            {userArticles.slice(0, 3).map((article) => (
+              <ArticleCard key={article.id} article={article} isOwner />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-8 text-center">
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              You haven't published any articles yet
+            </p>
+            <button
+              onClick={() => navigate('/articles/new')}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            >
+              Write Your First Article
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

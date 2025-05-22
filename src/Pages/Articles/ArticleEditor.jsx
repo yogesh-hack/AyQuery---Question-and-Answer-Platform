@@ -2,11 +2,9 @@ import React from "react";
 
 import "../../App.css";
 import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
-import RightSidebar from "../../components/RightSidebar/RightSidebar";
-import Mainblogs from "../../components/Blogs/Mainblogs";
-import Blogs from "../../components/Blogs/Blogs";
+import WriteArticle from "../../components/Blogs/WriteArticle";
 
-const Article = ({ slideIn }) => {
+const ArticleEditor= ({ slideIn }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
     {/* Left Sidebar */}
@@ -15,8 +13,8 @@ const Article = ({ slideIn }) => {
     </div>
   
     {/* Main Content Area */}
-    <div className="lg:col-span-3 w-full">
-      <Blogs/>
+    <div className="lg:col-span-3 w-full mt-20">
+      <WriteArticle/>
     </div>
   </div>
   
@@ -24,4 +22,4 @@ const Article = ({ slideIn }) => {
   );
 };
 
-export default Article;
+export default ArticleEditor;

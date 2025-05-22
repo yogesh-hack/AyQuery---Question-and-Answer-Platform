@@ -61,8 +61,11 @@ const Navbar = ({ handleSlideIn }) => {
           <Link to="/Questions" className="nav-item text-gray-900 dark:text-gray-300">
             Queries
           </Link>
-          <Link to="/" className="nav-item text-gray-900 dark:text-gray-300">
-            For Teams
+          <Link to="/Tweets" className="nav-item text-gray-900 dark:text-gray-300">
+            Tweets
+          </Link>
+          <Link to="/Media" className="nav-item text-gray-900 dark:text-gray-300">
+            Media
           </Link>
           <Link to="/Courses" className="nav-item text-gray-900 dark:text-gray-300">
             Courses

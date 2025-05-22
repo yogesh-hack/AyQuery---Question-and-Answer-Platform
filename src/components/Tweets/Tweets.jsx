@@ -40,7 +40,7 @@ function Tweets({ tweet }) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800 p-4 rounded-xl border mb-4 shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out">
+    <div className="bg-white dark:bg-[#0d1117] border-gray-200 dark:border-gray-800 p-4 rounded-xl border mb-4 shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out">
       <div className="flex justify-between">
         <div className="flex items-center">
           <img

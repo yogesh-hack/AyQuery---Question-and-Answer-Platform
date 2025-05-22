@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "./Pages/Home/Home";
 import Auth from "./Pages/Auth/Auth";
@@ -20,6 +20,15 @@ import Mainblogs from "./components/Blogs/Mainblogs";
 import VideoContent from "./components/VideoPlayer/VideoContent";
 import Course from "./Pages/WatchVideo/Course";
 import LiveCodingPage from "./Pages/CodeEditor/LiveCodingPage";
+import ArticleEditor from "./Pages/Articles/ArticleEditor";
+import Careers from "./Pages/careers/careers";
+import JobApplication from "./components/Jobs/JobApplication";
+import CareerApplication from "./Pages/careers/careerApplication";
+import Movies from "./Pages/Movies/movies";
+import Tweets from "./Pages/Tweets/Tweets";
+import Media from "./Pages/Media/Media";
+import AssessmentTest from "./Pages/Assessment/AssessmentTest";
+import Test from "./Pages/Assessment/Test";
 
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (
@@ -49,6 +58,14 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
         element={<Questions slideIn={slideIn} handleSlideIn={handleSlideIn} />}
       />
       <Route
+        path="/Tweets"
+        element={<Tweets slideIn={slideIn} handleSlideIn={handleSlideIn} />}
+      />
+      <Route
+        path="/Media"
+        element={<Media slideIn={slideIn} handleSlideIn={handleSlideIn} />}
+      />
+      <Route
         path="/Questions/:id"
         element={
           <DisplayQuestion slideIn={slideIn} handleSlideIn={handleSlideIn} />
@@ -74,6 +91,22 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
           <Article slideIn={slideIn} handleSlideIn={handleSlideIn} />
         }
       />
+      <Route
+        path="/Articles/write"
+        element={
+          <ArticleEditor slideIn={slideIn} handleSlideIn={handleSlideIn} />
+        }
+      />
+      <Route
+        path="/careers"
+        element={
+          <Careers slideIn={slideIn} handleSlideIn={handleSlideIn} />
+        }
+      />
+      <Route path="/careers/:jobId" element={<CareerApplication slideIn={slideIn} handleSlideIn={handleSlideIn} />} />
+      <Route path="/test/:testId" element={<AssessmentTest />} />
+      <Route path="/test/:testId/questions" element={<Test />} />
+
       <Route path="/Articles/blog/:slug" element={<Mainblogs />} />
       <Route
         path="/Aboutus"
@@ -82,10 +115,17 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
         }
       />
         <Route path="/editor/:roomId" element={<LiveCodingPage />} />
+        <Route path="/room-select" element={<LiveCodingPage />} />
       <Route
         path="/Courses"
         element={
           <Video slideIn={slideIn} handleSlideIn={handleSlideIn}/>
+        }
+      />
+      <Route
+        path="/movies"
+        element={
+          <Movies slideIn={slideIn} handleSlideIn={handleSlideIn}/>
         }
       />
         <Route path="/Courses/:courseTitle/:contentSlug" element={<VideoContent />} />
