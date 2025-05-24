@@ -41,7 +41,7 @@ const Navbar = ({ handleSlideIn }) => {
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   return (
-    <nav className="main-nav fixed top-0 w-full z-10 bg-transparent border-b shadow-xl backdrop-blur-lg">
+    <nav className="main-nav fixed top-0 w-full z-10 bg-transparent shadow-xl backdrop-blur-lg">
       <div className="navbar flex items-center justify-between p-4">
         {/* Mobile menu button */}
         <button type="button" className="block md:hidden" onClick={handleSlideIn}>

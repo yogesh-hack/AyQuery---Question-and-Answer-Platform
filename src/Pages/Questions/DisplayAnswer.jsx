@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import parse from 'html-react-parser'; // For rendering HTML content
 import Avatar from "../../components/Avatar/Avatar";
 import { deleteAnswer } from "../../actions/question";
+import { FaRegThumbsUp, FaShareAlt, FaTrashAlt } from 'react-icons/fa';
 
 
 const DisplayAnswer = ({ question, handleShare }) => {
@@ -85,66 +86,128 @@ const DisplayAnswer = ({ question, handleShare }) => {
   const handleDelete = (answerId, noOfAnswers) => {
     dispatch(deleteAnswer(id, answerId, noOfAnswers - 1));
   };
+  const CopyIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+  </svg>
+);
+
+const ShareIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+  </svg>
+);
+
+const TrashIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+  </svg>
+);
+
+const VerifiedIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+    <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+  </svg>
+);
   return (
-    <div>
+    <div className="space-y-6">
+      
       {question.answer.map((ans) => (
-        <div className="display-ans mt-5 space-y-4 p-4 bg-gray-50 rounded-lg shadow-2xl dark:bg-gray-800" key={ans._id}>
-          {formatAnswerContent(ans.answerBody).map((part, index) =>
-            part.type === 'code' ? (
-              // Render code blocks with syntax highlighting
-              <SyntaxHighlighter
-                key={index}
-                language="javascript"
-                style={materialDark}
-                className="rounded-lg p-2 z-100 mb-4"
-                customStyle={{ whiteSpace: 'pre-wrap' }}
-              >
-                {part.content}
-              </SyntaxHighlighter>
-            ) : (
-              // Render other content as HTML with proper styling (headings, lists, etc.)
-              <div
-                key={index}
-                className="text-base mb-4 leading-relaxed dark:text-gray-300"
-              >
-                {parseHtmlContent(part.content)} 
-              </div>
-            )
-          )}
-          <div className="question-actions-user flex justify-between mt-4">
-            <div>
-              <button
-                type="button"
-                onClick={handleShare}
-                className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
-              >
-                Share
-              </button>
-              {User?.result?._id === ans?.userId && (
-                <button
-                  type="button"
-                  onClick={() => handleDelete(ans._id, question.noOfAnswers)}
-                  className="ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        <div className="flex" key={ans._id}>
+          <div className="dark:bg-[#0d1117] text-dark dark:text-white shadow-md rounded-lg border border-gray-200 dark:border-gray-700 p-4 flex justify-between items-start w-full mx-auto hover:bg-gray-100 dark:hover:bg-gray-900 transition duration-200">
+            {/* Vote Section */}
+            <div className="flex w-full items-center gap-4">
+        
+              {/* Content Section */}
+              <div className="flex-1">
+              <Link
+                to={`/Users/${ans.userId}`} className="flex items-center text-sm text-gray-400 dark:text-gray-400 space-x-2">
+                  <div className="relative">
+                  <Avatar
+                    backgroundColor="#3b82f6"
+                    px="8px"
+                    py="4px"
+                    borderRadius="20px"
+                    className="text-white font-medium rounded-full"
+                  >
+                    {ans.userAnswered.charAt(0).toUpperCase()}
+                  </Avatar>
+                  {ans.verified && (
+                    <div className="absolute -bottom-1 -right-1 bg-blue-500 rounded-full p-0.5">
+                      <VerifiedIcon className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                </div>
+                  <span className="text-blue-500 dark:text-blue-500 hover:underline"> {ans.userAnswered}</span>
+                  <span>|</span>
+                  <span>Answered {moment(ans.answeredOn).fromNow()}</span>
+                </Link>
+                <div className="mt-2 mb-2">
+               {formatAnswerContent(ans.answerBody).map((part, index) =>
+              part.type === 'code' ? (
+                <div className="relative" key={index}>
+                  <SyntaxHighlighter
+                    language="javascript"
+                    style={materialDark}
+                    className="rounded-lg p-4 mb-4 text-sm overflow-x-auto"
+                    customStyle={{
+                      whiteSpace: 'pre-wrap',
+                      backgroundColor: '#263238',
+                      borderRadius: '0.5rem'
+                    }}
+                  >
+                    {part.content}
+                  </SyntaxHighlighter>
+                  <button
+                    onClick={() => navigator.clipboard.writeText(part.content)}
+                    className="absolute top-2 right-2 p-1 bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                    title="Copy code"
+                  >
+                    <CopyIcon className="w-4 h-4 text-gray-300" />
+                  </button>
+                </div>
+              ) : (
+                <div
+                  key={index}
+                  className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300"
                 >
-                  Delete
-                </button>
-              )}
+                  {parseHtmlContent(part.content)}
+                </div>
+              )
+            )}
             </div>
-            <div className="flex items-center space-x-2">
-              <p className="text-sm dark:text-gray-400">
-                answered {moment(ans.answeredOn).fromNow()}
-              </p>
-              <Link to={`/Users/${ans.userId}`} className="user-link text-blue-500 hover:underline">
-                <Avatar
-                  backgroundColor="lightgreen"
-                  px="8px"
-                  py="5px"
-                  borderRadius="4px"
-                >
-                  {ans.userAnswered.charAt(0).toUpperCase()}
-                </Avatar>
-                <div>{ans.userAnswered}</div>
-              </Link>
+            
+            <div className="flex gap-6 mt-4 pt-3 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400">
+  <button className="flex items-center gap-2 hover:text-blue-500 transition">
+    <FaRegThumbsUp className="text-lg" />
+    Thanks
+  </button>
+  <button className="flex items-center gap-2 hover:text-green-500 transition">
+    <FaShareAlt className="text-lg" />
+    Share
+  </button>
+  <button className="flex items-center gap-2 hover:text-red-500 transition">
+    <FaTrashAlt className="text-lg" />
+    Delete
+  </button>
+</div>
+
+                
+              </div>
+            </div>
+        
+            {/* Avatar Group */}
+            <div className="flex -space-x-2 mt-1">
+              <img
+                className="w-6 h-6 rounded-full border-2 border-gray-800 dark:border-gray-800"
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="user1"
+              />
+              <img
+                className="w-6 h-6 rounded-full border-2 border-gray-800 dark:border-gray-800"
+                src="https://randomuser.me/api/portraits/women/44.jpg"
+                alt="user2"
+              />
             </div>
           </div>
         </div>
@@ -154,3 +217,71 @@ const DisplayAnswer = ({ question, handleShare }) => {
 };
 
 export default DisplayAnswer;
+
+
+
+
+        // <div
+        //   className="group relative p-6 rounded-xl bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700"
+          
+        // >
+        //   {/* Answer content */}
+        //   <div className="space-y-4">
+           
+        //   </div>
+
+        //   {/* Actions and user info */}
+        //   <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        //     <div className="flex space-x-3">
+        //       <button
+        //         type="button"
+        //         onClick={handleShare}
+        //         className="flex items-center space-x-1 px-3 py-1.5 text-sm rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors"
+        //       >
+        //         <ShareIcon className="w-4 h-4" />
+        //         <span>Share</span>
+        //       </button>
+
+        //       {User?._id === ans?.userId && (
+        //         <button
+        //           type="button"
+        //           onClick={() => handleDelete(ans._id, question.noOfAnswers)}
+        //           className="flex items-center space-x-1 px-3 py-1.5 text-sm rounded-full bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 transition-colors"
+        //         >
+        //           <TrashIcon className="w-4 h-4" />
+        //           <span>Delete</span>
+        //         </button>
+        //       )}
+        //     </div>
+
+        //     <div className="flex items-center space-x-3">
+        //       <div className="text-xs text-gray-500 dark:text-gray-400">
+        //         Answered {moment(ans.answeredOn).fromNow()}
+        //       </div>
+        //       <Link
+        //         to={`/Users/${ans.userId}`}
+        //         className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+        //       >
+        //         <div className="relative">
+        //           <Avatar
+        //             backgroundColor="#3b82f6"
+        //             px="10px"
+        //             py="8px"
+        //             borderRadius="8px"
+        //             className="text-white font-medium"
+        //           >
+        //             {ans.userAnswered.charAt(0).toUpperCase()}
+        //           </Avatar>
+        //           {ans.verified && (
+        //             <div className="absolute -bottom-1 -right-1 bg-blue-500 rounded-full p-0.5">
+        //               <VerifiedIcon className="w-3 h-3 text-white" />
+        //             </div>
+        //           )}
+        //         </div>
+        //         <div className="font-medium text-gray-700 dark:text-gray-300">
+        //           {ans.userAnswered}
+        //         </div>
+        //       </Link>
+        //     </div>
+        //   </div>
+        // </div>

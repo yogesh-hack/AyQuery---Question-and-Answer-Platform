@@ -11,6 +11,41 @@ import { MdReplyAll } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function Tweets({ tweet }) {
+  const Comment = ({ user, time, text, likes, replies }) => (
+  <div className="flex items-start gap-3 relative pl-8">
+    {/* Vertical Line for Replies */}
+    <div className="absolute left-3 top-10 bottom-0 w-px bg-gray-300 dark:bg-gray-600" />
+
+    {/* User Avatar */}
+    <img src={user.avatar} alt="avatar" className="w-8 h-8 rounded-full mt-1" />
+
+    {/* Comment Content */}
+    <div className="flex-1">
+      <div className="text-sm font-semibold text-gray-900 dark:text-white">{user.name}</div>
+      <div className="text-xs text-gray-500">{time}</div>
+      <p className="mt-1 text-sm text-gray-800 dark:text-gray-200">{text}</p>
+
+      {/* Action Buttons */}
+      <div className="flex items-center gap-4 mt-2 text-gray-500 dark:text-gray-400 text-xs">
+        <button className="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400">
+          👍 {likes}
+        </button>
+        <button className="hover:text-blue-600 dark:hover:text-blue-400">Reply</button>
+        <button className="hover:text-blue-600 dark:hover:text-blue-400">⋯</button>
+      </div>
+
+      {/* Nested Replies */}
+      {replies?.length > 0 && (
+        <div className="mt-4 space-y-4">
+          {replies.map((reply, idx) => (
+            <Comment key={idx} {...reply} />
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+);
+
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentUserReducer);
@@ -99,6 +134,27 @@ function Tweets({ tweet }) {
         </button>
       </div>
       <div className="text-gray-500 dark:text-gray-400 flex mt-3">
+        <Comment
+  user={{ name: "Lyle Kauffman", avatar: "https://flowbite.com/docs/images/people/profile-picture-3.jpg" }}
+  time="1 day ago"
+  text="How do we measure the amount of water vapor in the air? Is it something we'll cover later?"
+  likes={12}
+  replies={[
+    {
+      user: { name: "Amanda Lowery", avatar: "https://flowbite.com/docs/images/people/profile-picture-3.jpg" },
+      time: "12 hours ago",
+      text: "Yes, I think we’ll dive deeper into that in the next module on humidity...",
+      likes: 8,
+    },
+    {
+      user: { name: "Owen Garcia", avatar: "https://flowbite.com/docs/images/people/profile-picture-3.jpg" },
+      time: "2 hours ago",
+      text: "Exactly! The next lesson will cover humidity...",
+      likes: 4,
+    },
+  ]}
+/>
+
         <TweetComments comments={tweet.comments} />
       </div>
       <div className="flex">

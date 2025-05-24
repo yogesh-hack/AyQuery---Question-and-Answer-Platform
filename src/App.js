@@ -69,7 +69,7 @@ function AppContent() {
     setSlideIn((prev) => !prev);
   };
 
-  const hideLayout = location.pathname.startsWith("/Auth") || location.pathname === "/verify-email" || location.pathname === "/error" || location.pathname.startsWith("/test");
+  const hideLayout = location.pathname.startsWith("/Auth") || location.pathname === "/" || location.pathname === "/verify-email" || location.pathname === "/error" || location.pathname.startsWith("/test");
 
   return (
     <>

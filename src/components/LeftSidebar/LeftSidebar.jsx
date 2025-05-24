@@ -10,7 +10,7 @@ const LeftSidebar = ({slideIn,handleSlideIn}) => {
   <div
     className={`${
       slideIn ? 'translate-x-0' : '-translate-x-full'
-    } fixed left-0 top-20 z-50 w-64 h-[calc(100vh-5rem)] border rounded shadow bg-white dark:bg-[#0d1117] transition-transform duration-300 ease-in-out`}
+    } fixed left-2 top-20 border border-gray-500 z-50 w-64 h-[calc(100vh-5rem)] rounded shadow bg-white dark:bg-[#0d1117] transition-transform duration-300 ease-in-out`}
   >
     <nav className="side-nav p-4 overflow-y-auto h-full custom-scrollbar">
       <button onClick={handleSlideIn} className="nav-btn mb-4">

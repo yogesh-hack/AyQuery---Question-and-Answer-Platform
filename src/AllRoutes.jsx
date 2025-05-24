@@ -29,13 +29,15 @@ import Tweets from "./Pages/Tweets/Tweets";
 import Media from "./Pages/Media/Media";
 import AssessmentTest from "./Pages/Assessment/AssessmentTest";
 import Test from "./Pages/Assessment/Test";
+import Landingpage from "./Pages/LandingPage/landingpage";
+import GamesPage from "./Pages/Games/GamesPage";
 
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (
     <Routes>
       <Route
         path="/"
-        element={<Home slideIn={slideIn} handleSlideIn={handleSlideIn} />}
+        element={<Landingpage/>}
       />
       <Route path="/Auth" element={<Auth />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
@@ -56,6 +58,10 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
       <Route
         path="/Questions"
         element={<Questions slideIn={slideIn} handleSlideIn={handleSlideIn} />}
+      />
+      <Route
+        path="/Games"
+        element={<GamesPage slideIn={slideIn} handleSlideIn={handleSlideIn} />}
       />
       <Route
         path="/Tweets"

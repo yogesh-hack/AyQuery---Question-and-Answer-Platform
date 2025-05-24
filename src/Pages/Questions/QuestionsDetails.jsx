@@ -18,75 +18,77 @@ import {
   voteQuestion,
 } from "../../actions/question";
 import { IoArrowBackCircle } from "react-icons/io5";
+import { FaArrowUp, FaArrowDown, FaTrash, FaShareAlt } from 'react-icons/fa';
+
 
 const QuestionsDetails = () => {
- // Function to separate code blocks (both ` ``` ` and <pre>) and other content
- const formatAnswerContent = (text) => {
-  // Regular expression to match both ` ``` ` blocks and <pre> blocks
-  const codeRegex = /<pre[^>]*>([\s\S]*?)<\/pre>/g;
-  const parts = [];
-  let lastIndex = 0;
-  let match;
+  // Function to separate code blocks (both ` ``` ` and <pre>) and other content
+  const formatAnswerContent = (text) => {
+    // Regular expression to match both ` ``` ` blocks and <pre> blocks
+    const codeRegex = /<pre[^>]*>([\s\S]*?)<\/pre>/g;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
 
-  // Iterate over the text to separate code and other content
-  while ((match = codeRegex.exec(text)) !== null) {
-    if (match.index > lastIndex) {
+    // Iterate over the text to separate code and other content
+    while ((match = codeRegex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push({
+          type: 'text',
+          content: text.slice(lastIndex, match.index).trim(),
+        });
+      }
+
+      // If matched text is inside backticks or <pre> tags, treat it as code
+      const codeContent = match[1];  // Extract content from <pre>
+      parts.push({
+        type: 'code',
+        content: codeContent.trim(),
+      });
+      lastIndex = codeRegex.lastIndex;
+    }
+
+    // Add remaining text
+    if (lastIndex < text.length) {
       parts.push({
         type: 'text',
-        content: text.slice(lastIndex, match.index).trim(),
+        content: text.slice(lastIndex).trim(),
       });
     }
 
-    // If matched text is inside backticks or <pre> tags, treat it as code
-    const codeContent = match[1];  // Extract content from <pre>
-    parts.push({
-      type: 'code',
-      content: codeContent.trim(),
-    });
-    lastIndex = codeRegex.lastIndex;
-  }
+    return parts;
+  };
 
-  // Add remaining text
-  if (lastIndex < text.length) {
-    parts.push({
-      type: 'text',
-      content: text.slice(lastIndex).trim(),
-    });
-  }
-
-  return parts;
-};
-
-// Function to safely parse HTML and render it with custom styles
-const parseHtmlContent = (content) => {
-  return parse(content, {
-    replace: (domNode) => {
-      if (domNode.type === 'tag') {
-        // Handle known tags and return React elements
-        if (domNode.name === 'h1') {
-          return <h1 className="text-2xl font-bold my-4">{domNode.children[0]?.data}</h1>;
+  // Function to safely parse HTML and render it with custom styles
+  const parseHtmlContent = (content) => {
+    return parse(content, {
+      replace: (domNode) => {
+        if (domNode.type === 'tag') {
+          // Handle known tags and return React elements
+          if (domNode.name === 'h1') {
+            return <h1 className="text-2xl font-bold my-4">{domNode.children[0]?.data}</h1>;
+          }
+          if (domNode.name === 'h2') {
+            return <h2 className="text-xl font-semibold my-3">{domNode.children[0]?.data}</h2>;
+          }
+          if (domNode.name === 'ol') {
+            return <ol className="list-decimal pl-6 my-3">{domNode.children.map((child, index) => <li key={index}>{child.data}</li>)}</ol>;
+          }
+          if (domNode.name === 'ul') {
+            return <ul className="list-disc pl-6 my-3">{domNode.children.map((child, index) => <li key={index}>{child.data}</li>)}</ul>;
+          }
+          if (domNode.name === 'pre') {
+            return (
+              <SyntaxHighlighter language="javascript" style={materialDark} className="rounded-lg p-2 mb-4">
+                {domNode.children[0]?.data}
+              </SyntaxHighlighter>
+            );
+          }
         }
-        if (domNode.name === 'h2') {
-          return <h2 className="text-xl font-semibold my-3">{domNode.children[0]?.data}</h2>;
-        }
-        if (domNode.name === 'ol') {
-          return <ol className="list-decimal pl-6 my-3">{domNode.children.map((child, index) => <li key={index}>{child.data}</li>)}</ol>;
-        }
-        if (domNode.name === 'ul') {
-          return <ul className="list-disc pl-6 my-3">{domNode.children.map((child, index) => <li key={index}>{child.data}</li>)}</ul>;
-        }
-        if (domNode.name === 'pre') {
-          return (
-            <SyntaxHighlighter language="javascript" style={materialDark} className="rounded-lg p-2 mb-4">
-              {domNode.children[0]?.data}
-            </SyntaxHighlighter>
-          );
-        }
+        return domNode; // Default behavior: render the node as is
       }
-      return domNode; // Default behavior: render the node as is
-    }
-  });
-};
+    });
+  };
 
   const { id } = useParams();
   const questionsList = useSelector((state) => state.questionsReducer);
@@ -148,173 +150,242 @@ const parseHtmlContent = (content) => {
   };
 
   // Custom toolbar options with a code block button
-const modules = {
-  toolbar: [
-    [{ header: '1' }, { header: '2' }, { font: [] }],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ color: [] }, { background: [] }],
-    [{ script: 'sub' }, { script: 'super' }],
-    [{ align: [] }],
-    ['blockquote', 'code-block'], // Adds the code block button
-    ['link', 'image', 'video'],
-    ['clean'] // Removes formatting
-  ]
-};
+  const modules = {
+    toolbar: [
+      [{ header: '1' }, { header: '2' }, { font: [] }],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ color: [] }, { background: [] }],
+      [{ script: 'sub' }, { script: 'super' }],
+      [{ align: [] }],
+      ['blockquote', 'code-block'], // Adds the code block button
+      ['link', 'image', 'video'],
+      ['clean'] // Removes formatting
+    ]
+  };
 
-// Configure formats to include 'code-block'
-const formats = [
-  'header', 'font', 'list', 'bold', 'italic', 'underline', 'strike',
-  'color', 'background', 'script', 'align', 'blockquote', 'code-block',
-  'link', 'image', 'video'
-];
+  // Configure formats to include 'code-block'
+  const formats = [
+    'header', 'font', 'list', 'bold', 'italic', 'underline', 'strike',
+    'color', 'background', 'script', 'align', 'blockquote', 'code-block',
+    'link', 'image', 'video'
+  ];
 
   return (
-    <div className="p-6 text-gray-900  dark:text-gray-100 min-h-screen">
-      
-  {questionsList.data === null ? (
-    <h1 className="text-center text-2xl font-semibold my-8"><img src="../../assets/Loading.gif" />
-</h1>
-  ) : (
-    <>
-      <button onClick={() => Navigate(-1)} type="button" class="text-white flex items-center gap-2 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"><IoArrowBackCircle /> Back</button>
-
-      {questionsList.data
-        .filter((question) => question._id === id)
-        .map((question) => (
-          <div key={question._id} className="space-y-8">
-            <section className="space-y-6 p-8 bg-white border rounded-lg shadow-xl dark:bg-gray-800 transition-colors duration-300">
-              <h1 className="text-3xl font-bold">{question.questionTitle}</h1>
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div className="flex flex-col items-center space-y-2 lg:col-span-2">
-                  <img
-                    src={upvote}
-                    alt="Upvote"
-                    width="24"
-                    className="cursor-pointer hover:scale-110 transition-transform duration-150"
-                    onClick={handleUpVote}
-                  />
-                  <p className="font-semibold text-lg">{question.upVote.length - question.downVote.length}</p>
-                  <img
-                    src={downvote}
-                    alt="Downvote"
-                    width="24"
-                    className="cursor-pointer hover:scale-110 transition-transform duration-150"
-                    onClick={handleDownVote}
-                  />
-                </div>
-                <div className="lg:col-span-10 space-y-4">
-                {formatAnswerContent(question.questionBody).map((part, index) =>
-            part.type === 'code' ? (
-              // Render code blocks with syntax highlighting
-              <SyntaxHighlighter
-                key={index}
-                language="javascript"
-                style={materialDark}
-                className="rounded-lg p-2 z-100 mb-4"
-                customStyle={{ whiteSpace: 'pre-wrap' }}
-              >
-                {part.content}
-              </SyntaxHighlighter>
-            ) : (
-              // Render other content as HTML with proper styling (headings, lists, etc.)
-              <div
-                key={index}
-                className="text-base mb-4 leading-relaxed dark:text-gray-300"
-              >
-                {parseHtmlContent(part.content)} 
-              </div>
-            )
-          )}
-                  <div className="flex flex-wrap gap-2">
-                    {question.questionTags.map((tag) => (
-                      <span key={tag} className="px-3 py-1 bg-blue-500 text-white text-sm rounded-lg dark:bg-blue-600">
-                        {tag}
-                      </span>
-                    ))}
+    <div className="max-w-6xl mx-auto p-4 md:p-6 text-gray-900 dark:text-gray-100 min-h-screen">
+      {questionsList.data === null ? (
+        <div className="flex justify-center items-center h-64">
+          <img
+            src="../../assets/Loading.gif"
+            alt="Loading..."
+            className="h-16 w-16"
+          />
+        </div>
+      ) : (
+        <>
+          <button
+            onClick={() => Navigate(-1)}
+            className="flex items-center gap-2 px-4 py-2.5 mb-6 text-sm font-medium rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200 transition-colors duration-200"
+          >
+            <IoArrowBackCircle className="w-5 h-5" />
+            Back
+          </button>
+          {console.log(questionsList.data)}
+          {questionsList.data
+            .filter((question) => question._id === id)
+            .map((question) => (
+              <div>
+              <div class="flex w-full items-start gap-2.5" key={question._id}>
+                <Link
+                  to={`/Users/${question.userId}`}
+                  className="flex items-center gap-2 group"
+                >
+                  <div className="relative">
+                    <Avatar
+                      backgroundColor="#3b82f6"
+                      px="8px"
+                      py="3px"
+                      borderRadius="20px"
+                      className="dark:text-white text-dark font-medium"
+                    >
+                      {question.userPosted.charAt(0).toUpperCase()}
+                    </Avatar>
                   </div>
-                  <div className="flex justify-between items-center mt-6">
-                    <div className="space-x-4">
-                      <button
-                        onClick={handleShare}
-                        className="px-4 py-2 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600 transition-colors duration-150"
-                      >
-                        Share
-                      </button>
-                      {User?.result?._id === question?.userId && (
-                        <button
-                          onClick={handleDelete}
-                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-150"
-                        >
-                          Delete
-                        </button>
+                </Link>
+                <div class="flex flex-col w-full leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-[#0d1117]">
+                  <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                    <span class="text-sm font-semibold text-gray-900 dark:text-white">{question.userPosted}</span>
+                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Asked {moment(question.askedOn).fromNow()}</span>
+
+                  </div>
+                  <h1 className="text-2xl md:text-3xl font-bold leading-snug">
+                    {question.questionTitle}
+                  </h1>
+                  {/* Question Content */}
+                  <div className="flex-1 space-y-6">
+
+
+                    <div className="prose dark:prose-invert max-w-none">
+                      {formatAnswerContent(question.questionBody).map((part, index) =>
+                        part.type === 'code' ? (
+                          <div key={index} className="relative my-4">
+                            <SyntaxHighlighter
+                              language="javascript"
+                              style={materialDark}
+                              className="rounded-lg p-4 text-sm"
+                              customStyle={{
+                                whiteSpace: 'pre-wrap',
+                                backgroundColor: '#263238'
+                              }}
+                            >
+                              {part.content}
+                            </SyntaxHighlighter>
+                            <button
+                              onClick={() => navigator.clipboard.writeText(part.content)}
+                              className="absolute top-3 right-3 p-1 bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                              title="Copy code"
+                            >
+                              <svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                              </svg>
+                            </button>
+                          </div>
+                        ) : (
+                          <div key={index} className="text-gray-700 dark:text-gray-300">
+                            {parseHtmlContent(part.content)}
+                          </div>
+                        )
                       )}
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <p className="text-sm">asked {moment(question.askedOn).fromNow()}</p>
-                      <Link
-                        to={`/Users/${question.userId}`}
-                        className="flex items-center space-x-2 text-blue-500 hover:underline"
-                      >
-                        <Avatar backgroundColor="orange" px="8px" py="5px" borderRadius="4px">
-                          {question.userPosted.charAt(0).toUpperCase()}
-                        </Avatar>
-                        <span>{question.userPosted}</span>
-                      </Link>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {question.questionTags.map((tag) => (
+                        <Link
+                          to={`/tags/${tag}`}
+                          key={tag}
+                          className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full hover:bg-blue-200 dark:bg-blue-900/50 dark:text-blue-300 dark:hover:bg-blue-900 transition-colors"
+                        >
+                          {tag}
+                        </Link>
+                      ))}
                     </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-            {question.noOfAnswers !== 0 && (
-              <section className="mt-8 space-y-4">
-                <h3 className="text-2xl font-semibold">{question.noOfAnswers} Answers</h3>
-                <DisplayAnswer question={question} handleShare={handleShare} />
-              </section>
-            )}
-            <section className="space-y-6 mt-8 p-6 bg-white border rounded-lg shadow-xl dark:bg-gray-800 transition-colors duration-300">
-      <h3 className="text-xl font-semibold">Your Answer</h3>
-      <form
-                onSubmit={(e) => handlePostAns(e, question.answer.length)}
-                className="space-y-4"
-              >
-        <ReactQuill
-          value={Answer}
-          onChange={setAnswer}
-          theme="snow"
-          modules={modules}
-          formats={formats}
-          className="dark:bg-gray-700 dark:border-gray-600 text-white dark:text-gray-100 transition-colors duration-150"
-          placeholder="Write your answer here..."
-          style={{ height: '200px', marginBottom: '60px' }}
-        />
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-150 dark:bg-blue-600 dark:hover:bg-blue-700"
-        >
-          Post Your Answer
-        </button>
-      </form>
-      <p className="text-sm mt-4">
-        Browse other questions tagged{' '}
-        {question.questionTags.map((tag) => (
-          <Link to="/Tags" key={tag} className="text-blue-500 hover:underline">
-            {tag}
-          </Link>
-        ))}{' '}
-        or{' '}
-        <Link to="/AskQuestion" className="text-blue-500 hover:underline">
-          ask your own question
-        </Link>.
-      </p>
-    </section>
-          </div>
-        ))}
-    </>
+                    <div className="flex gap-3 items-start text-sm text-blue-900 dark:text-white">
+  {/* Upvote */}
+  <button
+    onClick={handleUpVote}
+    title="Upvote"
+    className="flex items-center gap-2 font-medium bg-green-100 dark:bg-green-950 hover:bg-green-200 dark:hover:bg-green-900 text-green-700 dark:text-green-300 px-3 py-2 rounded-full transition"
+  >
+    <FaArrowUp className="w-5 h-5" />
+    {question.upVote.length} Upvotes
+  </button>
+
+  {/* Downvote */}
+  <button
+    onClick={handleDownVote}
+    title="Downvote"
+    className="flex items-center gap-2 font-medium bg-red-100 dark:bg-red-950 hover:bg-red-200 dark:hover:bg-red-900 text-red-600 dark:text-red-300 px-3 py-2 rounded-full transition"
+  >
+    <FaArrowDown className="w-5 h-5" />
+    {question.downVote.length} Downvotes
+  </button>
+
+  {/* Share */}
+  <button
+    onClick={handleShare}
+    title="Share"
+    className="flex items-center gap-2 font-medium bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-2 rounded-full transition"
+  >
+    <FaShareAlt className="w-4 h-4" />
+    Share
+  </button>
+
+  {/* Delete - Only visible if owner */}
+  {User?.result?._id === question?.userId && (
+    <button
+      onClick={handleDelete}
+      title="Delete"
+      className="flex items-center gap-2 font-medium bg-red-100 dark:bg-red-950 hover:bg-red-200 dark:hover:bg-red-800 text-red-600 dark:text-red-300 px-3 py-2 rounded-full transition"
+    >
+      <FaTrash className="w-4 h-4" />
+      Delete
+    </button>
   )}
 </div>
 
-  
+
+                  </div>
+                </div>
+                </div>
+                {/* Answers Section */}
+                {
+                  question.noOfAnswers !== 0 && (
+                    <section className="space-y-6">
+                      <h3 className="text-xl md:text-2xl font-semibold">
+                        {question.noOfAnswers} {question.noOfAnswers === 1 ? 'Answer' : 'Answers'}
+                      </h3>
+                      <DisplayAnswer question={question} handleShare={handleShare} />
+                    </section>
+                  )
+                }
+
+                {/* Answer Form */}
+                <section className="p-6 md:p-8 mt-10 bg-white rounded-xl shadow-sm border border-gray-100 dark:bg-gray-800 dark:border-gray-700 transition-colors duration-300" >
+                  <h3 className="text-xl font-semibold mb-6">Your Answer</h3>
+                  <form
+                    onSubmit={(e) => handlePostAns(e, question.answer.length)}
+                    className="space-y-6"
+                  >
+                    <div className="border rounded-lg overflow-hidden dark:border-gray-700">
+                      <ReactQuill
+                        value={Answer}
+                        onChange={setAnswer}
+                        theme="snow"
+                        modules={modules}
+                        formats={formats}
+                        className="dark:bg-gray-700 dark:text-gray-100"
+                        placeholder="Write your detailed answer here..."
+                        style={{ height: '200px' }}
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full md:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
+                    >
+                      Post Your Answer
+                    </button>
+                  </form>
+
+                  <p className="text-sm mt-6 text-gray-600 dark:text-gray-400">
+                    Browse other questions tagged{' '}
+                    {question.questionTags.map((tag, i) => (
+                      <>
+                        <Link
+                          to={`/tags/${tag}`}
+                          key={tag}
+                          className="text-blue-600 hover:underline dark:text-blue-400"
+                        >
+                          {tag}
+                        </Link>
+                        {i < question.questionTags.length - 1 ? ', ' : ''}
+                      </>
+                    ))}{' '}
+                    or{' '}
+                    <Link
+                      to="/AskQuestion"
+                      className="text-blue-600 hover:underline dark:text-blue-400"
+                    >
+                      ask your own question
+                    </Link>.
+                  </p>
+                </section>
+                </div>
+            ))
+          }
+        </>
+      )}
+    </div>
   );
 };
 
