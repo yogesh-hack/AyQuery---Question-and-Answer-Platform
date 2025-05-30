@@ -5,7 +5,7 @@ export const askQuestion = (questionData, navigate) => async (dispatch) => {
     const { data } = await api.postQuestion(questionData);
     dispatch({ type: "POST_QUESTION", payload: data });
     dispatch(fetchAllQuestions());
-    navigate("/");
+    navigate("/Questions");
   } catch (error) {
     console.log(error);
   }
@@ -24,7 +24,7 @@ export const deleteQuestion = (id, navigate) => async (dispatch) => {
   try {
     await api.deleteQuestion(id);
     dispatch(fetchAllQuestions());
-    navigate("/");
+    navigate("/Questions");
   } catch (error) {
     console.log(error);
   }

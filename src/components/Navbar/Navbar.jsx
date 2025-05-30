@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import decode from "jwt-decode";
 import logo from "../../assets/logo.png";
@@ -13,12 +13,24 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
+
 const Navbar = ({ handleSlideIn }) => {
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentUserReducer);
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+const location = useLocation();
+const currentPath = location.pathname;
+
+const navLinks = [
+  { label: "About", to: "/Aboutus" },
+  { label: "Queries", to: "/Questions" },
+  { label: "Tweets", to: "/Tweets" },
+  { label: "Media", to: "/Media" },
+  { label: "Courses", to: "/Courses" },
+  { label: "Articles", to: "/Articles" },
+];
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
@@ -55,33 +67,33 @@ const Navbar = ({ handleSlideIn }) => {
 
         {/* Desktop Links */}
         <div className="hidden lg:flex space-x-6 items-center">
-          <Link to="/Aboutus" className="nav-item text-gray-900 dark:text-gray-300" style={{textShadow:"0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;"}}>
-            About
-          </Link>
-          <Link to="/Questions" className="nav-item text-gray-900 dark:text-gray-300">
-            Queries
-          </Link>
-          <Link to="/Tweets" className="nav-item text-gray-900 dark:text-gray-300">
-            Tweets
-          </Link>
-          <Link to="/Media" className="nav-item text-gray-900 dark:text-gray-300">
-            Media
-          </Link>
-          <Link to="/Courses" className="nav-item text-gray-900 dark:text-gray-300">
-            Courses
-          </Link>
-          <Link to="/Articles" className="nav-item text-gray-900 dark:text-gray-300">
-            Articles
-          </Link>
-          <form className="flex items-center space-x-2">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded p-2"
-            />
-            <img src={search} alt="search" width="18" className="search-icon dark:invert" />
-          </form>
-        </div>
+  {navLinks.map(({ label, to }) => {
+    const isActive = currentPath === to;
+
+    return (
+      <Link
+  key={label}
+  to={to}
+  className={`relative nav-item text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1 rounded 
+    text-gray-900 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400
+    ${isActive ? 'shadow-[0_4px_12px_0_rgba(255,0,128,0.6),0_6px_20px_0_rgba(0,128,255,0.5)]' : ''}`}
+>
+  {label}
+</Link>
+
+    );
+  })}
+
+  <form className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-2 transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500">
+    <input
+      type="text"
+      placeholder="Search..."
+      className="bg-transparent outline-none text-sm text-gray-900 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
+    />
+    <img src={search} alt="search" width="18" className="search-icon dark:invert transition-transform hover:scale-110" />
+  </form>
+</div>
+
 
         {/* Profile, Logout, and Theme Toggle */}
         <div className="flex items-center space-x-4">
@@ -89,8 +101,8 @@ const Navbar = ({ handleSlideIn }) => {
             <>
               <Avatar
                 backgroundColor="#009dff"
-                px="10px"
-                py="7px"
+                px="12px"
+                py="6px"
                 borderRadius="50%"
                 color="white"
                 className="dark:bg-gray-700"
@@ -105,7 +117,7 @@ const Navbar = ({ handleSlideIn }) => {
               {/* Log Out button */}
               <button
                 onClick={handleLogout}
-                className="text-red-500 hover:text-red-600 font-semibold ml-4"
+                className="flex items-center gap-2 font-medium bg-red-100 dark:bg-red-950 hover:bg-red-200 dark:hover:bg-red-900 text-red-600 dark:text-red-200 px-3 py-2 rounded-full transition"
               >
                 Log Out
               </button>
@@ -122,7 +134,7 @@ const Navbar = ({ handleSlideIn }) => {
           {/* Theme toggle button */}
           <button
             onClick={toggleTheme}
-            className="px-2 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+            className="p-3 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
           >
             {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
           </button>
@@ -179,7 +191,7 @@ const Navbar = ({ handleSlideIn }) => {
           {User && (
             <button
               onClick={handleLogout}
-              className="w-full text-red-500 hover:text-red-600 font-semibold text-left"
+              className="flex items-center gap-2 font-medium bg-red-100 dark:bg-red-950 hover:bg-red-200 dark:hover:bg-red-900 text-red-600 dark:text-red-300 px-3 py-2 rounded-full transition"
             >
               Log Out
             </button>

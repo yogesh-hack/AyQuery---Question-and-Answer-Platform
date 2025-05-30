@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://ayquery-api.vercel.app/api",
+  baseURL: "http://localhost:5000/api",
   headers: {
     'apikey': 'MY_MASTER_KEY_1234'
   }

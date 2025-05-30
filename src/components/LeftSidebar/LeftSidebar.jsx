@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FaHome, FaHotjar, FaGlobe, FaGamepad, FaQuestionCircle, FaLaptop, FaFilm, FaInfoCircle, FaBriefcase, FaBullhorn, FaBook, FaHandsHelping, FaRegFileAlt, FaCode } from 'react-icons/fa';
 import { FiUsers } from 'react-icons/fi';
 import { MdPrivacyTip, MdPolicy } from 'react-icons/md';
@@ -41,10 +41,10 @@ const LeftSidebar = ({slideIn,handleSlideIn}) => {
           <FaGlobe className="mr-3" />
           <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Internet Culture (Viral)</p>
         </NavLink>
-        <NavLink to="/room-select" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>
+        <Link to="/room-select" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>
           <FaCode className="mr-3" />
           <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Code Editor</p>
-        </NavLink>
+        </Link>
         <NavLink to="/games" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>
           <FaGamepad className="mr-3" />
           <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">Games</p>
@@ -69,7 +69,7 @@ const LeftSidebar = ({slideIn,handleSlideIn}) => {
         <p className="text-sm font-semibold text-gray-500 dark:text-gray-300 mb-2">RESOURCES</p>
         <NavLink to="/about" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>
           <FaInfoCircle className="mr-3" />
-          <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">About Reddit</p>
+          <p className="side-nav-links text-gray-700 dark:text-white hover:text-blue-500">About AyQuery</p>
         </NavLink>
         <NavLink to="/advertise" className="nav-btn w-full py-2 px-4 mb-2 flex items-center" onClick={handleSlideIn}>
           <FaBullhorn className="mr-3" />

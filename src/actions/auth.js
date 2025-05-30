@@ -22,10 +22,14 @@ export const verifyEmail = (verificationData, navigate) => async (dispatch) => {
     const { data } = await api.OtpVerify(verificationData);
     dispatch({ type: "AUTH", data });
     localStorage.setItem("Profile", JSON.stringify(data.user));
-    toast.success("Email verified successfully!");
+    toast.success(data.message);
     dispatch(setCurrentUser(data.user));
     dispatch(fetchAllUsers()); 
+    if(data.user.role === "User") {
     navigate("/Questions");
+    }else{
+    navigate("/company/dashboard");
+    }
   } catch (error) {
     console.log(error);
     toast.error(error.response?.data?.message ||"Invalid OTP or verification failed");
@@ -38,7 +42,11 @@ export const login = (authData, navigate) => async (dispatch) => {
     dispatch({ type: "AUTH", data });
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
     toast.success("Login successful!");
+     if(data.user.role === "User") {
     navigate("/Questions");
+    }else{
+    navigate("/company/dashboard");
+    }
   } catch (error) {
     console.log(error);
     toast.error("Login failed. Incorrect credentials.");

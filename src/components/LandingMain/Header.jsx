@@ -123,8 +123,8 @@ const Header = () => {
            <Link to="/Auth" className="text-sm block py-3 font-medium text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white/90">
                 Sign In
               </Link>
-           <Link to="/Auth" className="inline-flex bg-purple-500 items-center text-white px-5 py-3 text-sm rounded-full button-bg h-11">
-                Get Started Free
+           <Link to="/Auth?type=new_account" className="inline-flex bg-purple-500 items-center text-white px-5 py-3 text-sm rounded-full button-bg h-11">
+                Create New Account
               </Link>
           </div>
         </div>
@@ -190,7 +190,7 @@ const Header = () => {
                 Sign In
               </Link>
               <Link to="/Auth" className="inline-flex bg-purple-500 items-center text-gray-500 dark:text-gray-300 px-5 py-3 text-sm rounded-full button-bg h-11">
-                Get Started Free
+                Create new Account
               </Link>
             </div>
           </div>

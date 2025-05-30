@@ -5,6 +5,7 @@ import QuestionList from "./QuestionList";
 import Media from "../Media/Media";
 import Loading from "../../assets/Loading.gif";
 import TweetsList from "../Tweets/TweetsList";
+import ModernLoader from "../ModernLoader";
 
 const HomeMainbar = () => {
   const location = useLocation();
@@ -60,7 +61,7 @@ const tabs = ["Popular", "Newest", "Following"];
       {/* Content Rendering based on the active tab */}
       <div className="mt-4">
         {questionsList.data === null ? (
-          <img src={Loading} className="text-3xl text-center mx-auto"/>
+          <ModernLoader/>
         ) : (
           <>
             {/* <p className="mb-4 text-lg text-gray-700 dark:text-gray-300">

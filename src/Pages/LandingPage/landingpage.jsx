@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../../components/LandingMain/Header'
 import Footer from '../../components/LandingMain/Footer'
+import { Link } from 'react-router-dom'
 
 function Landingpage() {
     return (
@@ -103,9 +104,7 @@ function Landingpage() {
                                 Core Features
                             </h2>
                             <p class="max-w-xl mx-auto leading-6 text-gray-500 dark:text-gray-400">
-                                Unlock the Potential of Innovation. Discover the Advanced AI
-                                Tools Transforming Your Ideas into Reality with Unmatched
-                                Precision and Intelligence.
+                                All-in-one ecosystem for knowledge sharing, creativity, productivity, collaboration, and entertainment. Whether you're a developer, student, content creator, or job seeker — AyQuery brings everything under one roof.
                             </p>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
@@ -118,11 +117,10 @@ function Landingpage() {
                                     </svg>
                                 </div>
                                 <h3 class="mb-4 text-gray-800 dark:text-white/90 font-bold text-xl md:text-2xl max-w-[312px]">
-                                    Seamless Content Creation AI
+                                    Universal Q&A Hub
                                 </h3>
                                 <p class="text-gray-500 max-w-[312px] dark:text-gray-400">
-                                    Let our AI-powered service simplify your content creation
-                                    process. Start using AI today!
+                                    Ask and answer questions across tech, design, marketing, writing, and more.
                                 </p>
                             </div>
                             <div class="core-feature-wrapper bg-white p-9 border border-gray-200 dark:border-white/[0.03] dark:bg-white/[0.05]">
@@ -139,11 +137,10 @@ function Landingpage() {
                                     </svg>
                                 </div>
                                 <h3 class="mb-4 text-gray-800 dark:text-white/90 font-bold text-xl md:text-2xl max-w-[312px]">
-                                    Your Ideas, Powered by Our Technology
+                                    Multi-Media Integration
                                 </h3>
                                 <p class="text-gray-500 max-w-[312px] dark:text-gray-400">
-                                    Discover how AI can transform your ideas into captivating
-                                    content with our high-quality service.
+                                    Embed tweets, videos, images, and live code directly into your posts or projects.
                                 </p>
                             </div>
                             <div class="core-feature-wrapper bg-white p-9 border border-gray-200 dark:border-white/[0.03] dark:bg-white/[0.05]">
@@ -153,11 +150,10 @@ function Landingpage() {
                                     </svg>
                                 </div>
                                 <h3 class="mb-4 text-gray-800 dark:text-white/90 font-bold text-xl md:text-2xl max-w-[312px]">
-                                    Intelligent Writing by Powerful AI
+                                    Collaborative Books & Stories   
                                 </h3>
                                 <p class="text-gray-500 max-w-[312px] dark:text-gray-400">
-                                    Effortlessly access AI-generated content for your blogs,
-                                    websites, and more with our high-quality, convenient service.
+                                   Write, edit, and publish collaborative books, articles, and interactive stories with your team or community.
                                 </p>
                             </div>
                             <div class="core-feature-wrapper bg-white p-9 border border-gray-200 dark:border-white/[0.03] dark:bg-white/[0.05]">
@@ -167,11 +163,10 @@ function Landingpage() {
                                     </svg>
                                 </div>
                                 <h3 class="mb-4 text-gray-800 dark:text-white/90 font-bold text-xl md:text-2xl max-w-[312px]">
-                                    AI Generation Made Life Easier
+                                    Live Streaming & Entertainment
                                 </h3>
                                 <p class="text-gray-500 max-w-[312px] dark:text-gray-400">
-                                    Experience effortless content creation with our AI service.
-                                    Write less, accomplish more.
+                                   Stream games, share movie nights, or enjoy TV shows — all inside AyQuery.
                                 </p>
                             </div>
                             <div class="core-feature-wrapper bg-white p-9 border border-gray-200 dark:border-white/[0.03] dark:bg-white/[0.05]">
@@ -182,11 +177,10 @@ function Landingpage() {
                                     </svg>
                                 </div>
                                 <h3 class="mb-4 text-gray-800 dark:text-white/90 font-bold text-xl md:text-2xl max-w-[312px]">
-                                    Premium AI-Generated Content
+                                    Real Company Assessment Hirring Tests
                                 </h3>
                                 <p class="text-gray-500 max-w-[312px] dark:text-gray-400">
-                                    Get expertly crafted content in no time with our AI service.
-                                    Where quality meets speed.
+                                    Practice coding and aptitude tests modeled after actual companies' hiring processes.
                                 </p>
                             </div>
                             <div class="core-feature-wrapper bg-white p-9 border border-gray-200 dark:border-white/[0.03] dark:bg-white/[0.05]">
@@ -197,11 +191,10 @@ function Landingpage() {
                                     </svg>
                                 </div>
                                 <h3 class="mb-4 text-gray-800 dark:text-white/90 font-bold text-xl md:text-2xl max-w-[312px]">
-                                    Super Fast AI Writing Companion
+                                    Jobs & Courses Marketplace
                                 </h3>
                                 <p class="text-gray-500 max-w-[312px] dark:text-gray-400">
-                                    Partner with AI to create content that connects with your
-                                    audience. Give it a try now.
+                                    Post or apply for jobs and internships. Learn from handpicked online courses to grow your career.
                                 </p>
                             </div>
                         </div>
@@ -256,7 +249,7 @@ function Landingpage() {
                                                 </radialGradient>
                                             </defs>
                                         </svg>
-                                        Text Generator
+                                       AI Answer Assistant
                                     </button>
                                     <button class="flex items-center h-12 gap-2 px-4 py-3 text-sm font-medium transition-colors duration-200 rounded-full text-gray-500 dark:text-gray-400 bg-transparent">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
@@ -297,7 +290,7 @@ function Landingpage() {
                                                 </radialGradient>
                                             </defs>
                                         </svg>
-                                        Image Generator
+                                        Code Generator & Debugger
                                     </button>
                                     <button class="flex items-center h-12 gap-2 px-4 py-3 text-sm font-medium transition-colors duration-200 rounded-full bg-white dark:text-white/90 dark:bg-white/10 text-gray-800">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
@@ -333,7 +326,7 @@ function Landingpage() {
                                                 </radialGradient>
                                             </defs>
                                         </svg>
-                                        Code Generator
+                                        AI Content Creator
                                     </button>
                                     <button class="flex items-center h-12 px-4 py-3 text-sm font-medium transition-colors duration-200 rounded-full text-gray-500 dark:text-gray-400 bg-transparent">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="38" height="32" viewBox="0 0 38 32" fill="none">
@@ -369,9 +362,9 @@ function Landingpage() {
                                                 </radialGradient>
                                             </defs>
                                         </svg>
-                                        Video Generator
+                                        AI Interview Coach
                                     </button>
-                                    <button class="flex items-center h-12 gap-2 px-4 py-3 text-sm font-medium transition-colors duration-200 rounded-full text-gray-500 dark:text-gray-400 bg-transparent">
+                                    {/* <button class="flex items-center h-12 gap-2 px-4 py-3 text-sm font-medium transition-colors duration-200 rounded-full text-gray-500 dark:text-gray-400 bg-transparent">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="32" viewBox="0 0 36 32" fill="none">
                                             <g filter="url(#filter0_d_9279_160)">
                                                 <g filter="url(#filter1_i_9279_160)">
@@ -406,7 +399,7 @@ function Landingpage() {
                                             </defs>
                                         </svg>
                                         Email Generator
-                                    </button>
+                                    </button> */}
                                 </div>
                                 <div class="overflow-hidden tab-img-bg rounded-4xl">
                                     <div x-show="activeTab === 'text'" class="p-6">
@@ -472,10 +465,10 @@ function Landingpage() {
                         <div class="max-w-[1008px] mx-auto">
                             <div class="grid lg:grid-cols-12 gap-8">
                                 <div class="lg:col-span-6">
-                                    <div class="relative flex flex-col justify-between bg-primary-500 rounded-[20px] p-9 md:p-13">
+                                    <div class="relative flex flex-col justify-between bg-purple-500 rounded-[20px] p-9 md:p-13">
                                         <div class="max-w-sm mb-32">
                                             <h3 class="font-bold text-white text-2xl md:text-3xl mb-4">
-                                                Craft Professional-Grade Content with AI
+                                               Save time switching between multiple tools
                                             </h3>
                                             <p class="text-base text-white/70">
                                                 Transform your ideas into groundbreaking realities with
@@ -486,18 +479,18 @@ function Landingpage() {
                                             <img src="./assets/images/benefits/ind-1.svg" class="absolute left-8 top-[61%] floating-1" alt="" />
                                             <img src="./assets/images/benefits/ind-2.svg" class="absolute right-28 top-[55%] floating-2" alt="" />
                                             <img src="./assets/images/benefits/ind-3.svg" class="right-8 absolute bottom-[15%] floating-3" alt="" />
-                                            <img src="./assets/images/benefits/bn-1.svg" class="-mb-8 md:-mb-11" alt="" />
+                                            <img src="https://ai-agent.preview.uideck.com/assets/images/benefits/bn-1.svg" class="-mb-8 md:-mb-11" alt="" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
-                                    <div class="benefits-bg rounded-[20px] p-12 overflow-hidden">
+                                    <div class="bg-pink-500 rounded-[20px] p-12 overflow-hidden">
                                         <div>
-                                            <img src="./assets/images/benefits/bn-2.svg" alt="" />
+                                            <img src="https://ai-agent.preview.uideck.com/assets/images/benefits/bn-2.svg" alt="" />
                                         </div>
                                         <div>
                                             <h3 class="font-bold max-w-xs text-white text-2xl md:text-3xl mb-4">
-                                                Boost your Productivity 10X with our AI agent tools.
+                                                 Grow your knowledge and portfolio in one place
                                             </h3>
                                             <p class="text-base max-w-sm text-white/70">
                                                 Unlock the Potential of Innovation, Discover the
@@ -510,20 +503,20 @@ function Landingpage() {
                                     <div class="lg:px-12 p-8 bg-[#2D0B70] lg:pb-0 lg:p-12 relative rounded-[20px] h-full lg:flex lg:flex-row justify-between bg-cover flex-col gap-5">
                                         <div class="max-w-sm relative z-10">
                                             <h3 class="font-bold text-white text-2xl md:text-3xl mb-4">
-                                                Overcome Writer's Block Today
+                                                 Get noticed with intelligent chat AI 
                                             </h3>
                                             <p class="text-base text-white/70 mb-8">
                                                 Discover the cutting-edge AI tools that bring your ideas
                                                 to life with exceptional accuracy.
                                             </p>
-                                            <a href="contact.html" class="font-medium inline-block text-sm text-white rounded-full bg-primary-500 hover:bg-primary-600 transition py-3 px-6">
+                                            <Link to="/new-chat" class="font-medium inline-block text-sm text-white rounded-full bg-primary-500 hover:bg-primary-600 transition py-3 px-6">
                                                 Try it now for Free
-                                            </a>
+                                            </Link>
                                         </div>
                                         <div>
-                                            <img src="./assets/images/benefits/bn-3.svg" class="hidden lg:block relative z-10" alt="" />
+                                            <img src="https://ai-agent.preview.uideck.com/assets/images/benefits/bn-3.svg" class="hidden lg:block relative z-10" alt="" />
                                         </div>
-                                        <img src="./assets/images/benefits/blur-shape.png" alt="" class="h-full w-full -z-0 absolute top-0 right-0" />
+                                        <img src="https://ai-agent.preview.uideck.com/assets/images/benefits/blur-shape.png" alt="" class="h-full w-full -z-0 absolute top-0 right-0" />
                                     </div>
                                 </div>
                             </div>

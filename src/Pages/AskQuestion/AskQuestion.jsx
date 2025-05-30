@@ -50,7 +50,7 @@ const AskQuestion = () => {
             questionTitle,
             questionBody,
             questionTags: questionTags.split(" "),
-            userPosted: User.result.name,
+            userPosted: User.name,
           },
           navigate
         )

@@ -16,6 +16,7 @@ import Footer from "./components/Footer/Footer";
 import { useLocation } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { fetchAllStores } from "./actions/store";
+import { LoadingProvider } from "./context/LoadingContext";
 
 // Component to show loader on route change
 function PageLoader() {
@@ -69,13 +70,15 @@ function AppContent() {
     setSlideIn((prev) => !prev);
   };
 
-  const hideLayout = location.pathname.startsWith("/Auth") || location.pathname === "/" || location.pathname === "/verify-email" || location.pathname === "/error" || location.pathname.startsWith("/test");
+  const hideLayout = location.pathname.startsWith("/Auth") ||  location.pathname.startsWith("/company")|| location.pathname === "/" || location.pathname === "/forgot-password" || location.pathname === "/verify-email" || location.pathname === "/error" || location.pathname.startsWith("/test") || location.pathname.startsWith("/new-chat");
 
   return (
     <>
       <PageLoader />
       {!hideLayout && <Navbar handleSlideIn={handleSlideIn} />}
+      <LoadingProvider>
       <AllRoutes slideIn={slideIn} handleSlideIn={handleSlideIn} />
+      </LoadingProvider>
       {!hideLayout && <Footer />}
     </>
   );
