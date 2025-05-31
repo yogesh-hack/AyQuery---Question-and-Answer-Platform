@@ -13,7 +13,7 @@ const Questions = ({ slideIn, handleSlideIn }) => {
       </div>
 
       {/* Combined Main Content and Right Sidebar Area */}
-      <div className="lg:col-span-3 mt-24 mr-10">
+      <div className="lg:col-span-3 mt-24 lg:mr-3 " style={{ marginLeft: "-60px" }}>
         <CommunitySection/>
 
         {/* Main Content Section */}

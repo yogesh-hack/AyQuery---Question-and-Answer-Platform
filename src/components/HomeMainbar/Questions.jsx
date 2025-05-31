@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import slugify from "../../utils/slugify";
 
 const Questions = ({ question }) => {
   return (
@@ -20,8 +21,7 @@ const Questions = ({ question }) => {
       {/* Content Section */}
       <div className="flex-1">
         <div className="mt-2 mb-2">
-      <Link
-        to={`/Questions/${question._id}`}
+     <Link to={`/Questions/${question._id}/${slugify(question.questionTitle)}`}
         className="font-semibold text-lg mb-2 text-dark dark:text-white"
       >
         {question.questionTitle.length > (window.innerWidth <= 400 ? 70 : 90)

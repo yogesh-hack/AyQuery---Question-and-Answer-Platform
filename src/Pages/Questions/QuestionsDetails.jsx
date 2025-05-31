@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
@@ -6,9 +6,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import copy from "copy-to-clipboard";
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import the Quill editor styles
-import upvote from "../../assets/sort-up.svg";
-import downvote from "../../assets/sort-down.svg";
+import 'react-quill/dist/quill.snow.css'; 
 import Avatar from "../../components/Avatar/Avatar";
 import DisplayAnswer from "./DisplayAnswer";
 import parse from 'html-react-parser'; // For rendering HTML content
@@ -19,10 +17,12 @@ import {
 } from "../../actions/question";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { FaArrowUp, FaArrowDown, FaTrash, FaShareAlt } from 'react-icons/fa';
-
+import slugify from "../../utils/slugify";
+import { Helmet } from "react-helmet-async"; // For setting document head metadata
+import AdSenseAd from "../../components/Adverstise/AdSenseAd";
 
 const QuestionsDetails = () => {
-  // Function to separate code blocks (both ` ``` ` and <pre>) and other content
+ 
   const formatAnswerContent = (text) => {
     // Regular expression to match both ` ``` ` blocks and <pre> blocks
     const codeRegex = /<pre[^>]*>([\s\S]*?)<\/pre>/g;
@@ -90,15 +90,29 @@ const QuestionsDetails = () => {
     });
   };
 
-  const { id } = useParams();
+  const { id, slug } = useParams();
   const questionsList = useSelector((state) => state.questionsReducer);
-
   const [Answer, setAnswer] = useState("");
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentUserReducer);
   const location = useLocation();
   const url = "http://localhost:3000";
+
+  
+  useEffect(() => {
+    if (questionsList.data) {
+      const question = questionsList.data.find(q => q._id === id);
+      if (question) {
+        const expectedSlug = slugify(question.questionTitle);
+        if (slug !== expectedSlug) {
+          Navigate(`/Questions/${id}/${expectedSlug}`, { replace: true });
+        }
+      }
+    }
+  }, [questionsList.data, id, slug, Navigate]);
+
+  const question = questionsList.data?.find(q => q._id === id);
 
   const handlePostAns = (e, answerLength) => {
     e.preventDefault();
@@ -173,6 +187,26 @@ const QuestionsDetails = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-6 text-gray-900 dark:text-gray-100 min-h-screen">
+      <Helmet>
+        <title>
+          {question
+            ? `${question.questionTitle} | AyQuery`
+            : "Loading... | AyQuery"}
+        </title>
+        <meta
+          name="description"
+          content={
+            question
+              ? question.questionBody.replace(/<[^>]+>/g, '').slice(0, 160)
+              : "AyQuery question details page."
+          }
+        />
+  <meta property="og:title" content={question.questionTitle} />
+  <meta property="og:description" content={question.questionBody} />
+  {/* <meta property="og:image" content={image} /> */}
+  <meta property="og:url" content={window.location.href} />
+  <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       {questionsList.data === null ? (
         <div className="flex justify-center items-center h-64">
           <img
@@ -325,6 +359,7 @@ const QuestionsDetails = () => {
                       <h3 className="text-xl md:text-2xl font-semibold">
                         {question.noOfAnswers} {question.noOfAnswers === 1 ? 'Answer' : 'Answers'}
                       </h3>
+                      <AdSenseAd/>
                       <DisplayAnswer question={question} handleShare={handleShare} />
                     </section>
                   )

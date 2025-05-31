@@ -7,6 +7,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import Reducers from "./reducers";
 import { ThemeProvider } from "./context/ThemeContext";
+import { HelmetProvider } from "react-helmet-async";
 
 const store = createStore(Reducers, compose(applyMiddleware(thunk)));
 
@@ -15,7 +16,9 @@ root.render(
   <Provider store={store}>
     <React.StrictMode>
     <ThemeProvider>
+      <HelmetProvider>
       <App />
+      </HelmetProvider>
       </ThemeProvider>
     </React.StrictMode>
   </Provider>

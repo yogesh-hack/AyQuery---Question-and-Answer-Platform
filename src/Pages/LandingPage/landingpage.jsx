@@ -2,10 +2,15 @@ import React from 'react'
 import Header from '../../components/LandingMain/Header'
 import Footer from '../../components/LandingMain/Footer'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 function Landingpage() {
     return (
         <div class="dark:bg-dark">
+            <Helmet>
+      <title>Home | AyQuery</title>
+      <meta name="description" content="Welcome to AyQuery. Discover answers, ask questions, and join the community." />
+    </Helmet>
             <Header />
             <main>
                 <section class="pt-16 relative overflow-hidden">

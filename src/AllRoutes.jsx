@@ -108,7 +108,7 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
         element={<RouteWithLoader element={Media} slideIn={slideIn} handleSlideIn={handleSlideIn} />}
       />
       <Route
-        path="/Questions/:id"
+        path="/Questions/:id/:slug"
         element={<RouteWithLoader element={DisplayQuestion} slideIn={slideIn} handleSlideIn={handleSlideIn} />}
       />
       <Route

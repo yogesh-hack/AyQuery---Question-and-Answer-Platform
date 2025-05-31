@@ -4,6 +4,27 @@ import { Bell, MessageSquarePlus } from 'lucide-react';
 import CreateMedia from './CreateMedia';
 function Media() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(null);
+  const handleCardClick = idx => setSelectedIndex(idx);
+  const handleClose = () => setSelectedIndex(null);
+
+  const profile = {
+  name: "Bonnie Green",
+  time: "11:40",
+  avatar: "https://flowbite.com/docs/images/people/profile-picture-3.jpg",
+  followers: 1234,
+  following: 567,
+  posts: 42,
+  bio: "Web Developer | Nature Lover",
+  location: "Berlin, Germany",
+  website: "https://bonniegreen.com",
+  socials: [
+    { name: "Twitter", url: "https://twitter.com/bonniegreen" },
+    { name: "LinkedIn", url: "https://linkedin.com/in/bonniegreen" }
+  ]
+};
+ const [hoveredProfileIdx, setHoveredProfileIdx] = useState(null);
+
   const imageUrls = [
     "https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg",
     "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg",
@@ -18,6 +39,7 @@ function Media() {
     "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg",
     "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg",
   ];
+  
   return (
     <div class="container mx-auto">
      <header className="flex items-center justify-between py-2 shadow-sm">
@@ -109,77 +131,242 @@ function Media() {
     </div>
     
   </div>
-  <h1 className="text-2xl font-semibold mb-3">Media</h1>
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  {imageUrls.map((url, index) => (
-    <div className="flex items-start gap-2.5" key={index}>
-      <div className="flex flex-col gap-1 w-full">
-        <div className="flex flex-col w-full leading-1.5 p-4 border border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-[#0d1117] dark:border-gray-800">
-          
-          {/* Header */}
-          <div className="flex items-start justify-between mb-2">
-            <div className="flex items-center space-x-2">
-              <img
-                className="w-8 h-8 rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                alt="User"
-              />
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">Bonnie Green</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">11:4{index}</span>
-              </div>
-            </div>
+   <div className="relative">
+      <h1 className="text-2xl font-semibold mb-3">Media</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {imageUrls.map((url, index) => (
+        <div
+          className="flex items-start gap-2.5 cursor-pointer"
+          key={index}
+        >
+          <div className="flex flex-col gap-1 w-full">
+            <div className="relative flex flex-col w-full leading-1.5 p-4 border border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-[#0d1117] dark:border-gray-800 transition-shadow hover:shadow-lg">
+              {/* Left Center Chat Tail */}
+              <span className="absolute left-[-14px] top-1/2 transform -translate-y-1/2 w-4 h-4">
+                <svg
+                  width="18"
+                  height="32"
+                  className="text-gray-100 dark:text-[#0d1117]"
+                  viewBox="0 0 18 32"
+                >
+                  <path d="M18 0 Q0 16 18 32" fill="currentColor" />
+                </svg>
+              </span>
+              {/* Header */}
+              <div className="flex items-start justify-between mb-2">
+                <div
+                  className="relative flex flex-col items-center"
+                  onMouseEnter={() => setHoveredProfileIdx(index)}
+                  onMouseLeave={() => setHoveredProfileIdx(null)}
+                >
+                  {/* Profile Icon */}
+                  <img
+                    className="w-10 h-10 rounded-full border-2 border-gray-300 dark:border-gray-600 shadow-lg cursor-pointer"
+                    src={profile.avatar}
+                    alt="Profile"
+                  />
 
+                  {/* Popover Card */}
+                  <div
+                    className={`absolute left-1/2 -translate-x-1/2 mt-3 z-50 min-w-[260px] max-w-xs bg-white dark:bg-[#161b22] rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-200 ${
+                      hoveredProfileIdx === index
+                        ? "opacity-100 pointer-events-auto"
+                        : "opacity-0 pointer-events-none"
+                    }`}
+                    style={{ bottom: "-230px" }}
+                  >
+                    {/* Arrow */}
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <svg width={28} height={16} className="text-white dark:text-[#161b22]" viewBox="0 0 28 16">
+                        <polygon points="14,16 0,0 28,0" fill="currentColor" />
+                      </svg>
+                    </span>
+                    <div className="flex flex-col items-center px-6 pt-4 pb-5">
+                      <img
+                        className="w-16 h-16 rounded-full mb-2 border-2 border-gray-200 dark:border-gray-700"
+                        src={profile.avatar}
+                        alt="Profile"
+                      />
+                      <div className="text-lg font-semibold text-gray-900 dark:text-white">{profile.name}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{profile.bio}</div>
+                      <div className="flex gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
+                        <span>{profile.location}</span>
+                        <span>·</span>
+                        <a
+                          href={profile.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 hover:underline"
+                        >
+                          Website
+                        </a>
+                      </div>
+                      <div className="flex gap-5 text-center my-2">
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white">{profile.followers}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">Followers</div>
+                        </div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white">{profile.following}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">Following</div>
+                        </div>
+                        <div>
+                          <div className="font-bold text-gray-900 dark:text-white">{profile.posts}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">Posts</div>
+                        </div>
+                      </div>
+                      <div className="flex gap-3 mt-2">
+                        {profile.socials.map((social) => (
+                          <a
+                            key={social.name}
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-blue-500 dark:text-blue-400 hover:underline"
+                          >
+                            {social.name}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none"
+                >
+                  <svg
+                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    fill="currentColor"
+                    viewBox="0 0 4 15"
+                  >
+                    <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                  </svg>
+                </button>
+              </div>
+              {/* Caption */}
+              <p className="text-sm text-gray-900 dark:text-white mb-2">
+                This is the new office #{index + 1}
+              </p>
+              {/* Image */}
+              <div>
+                <img
+                  className="h-auto max-w-full rounded-lg"
+                  src={url}
+                  alt={`Comment ${index + 1}`}
+                />
+              </div>
+              {/* Actions */}
+              <div className="flex justify-between items-center px-4 py-2 border-t border-gray-200 dark:border-gray-700 mt-3">
+                <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300 text-xl">
+                  <FaRegHeart className="cursor-pointer hover:text-red-500 transition-colors duration-200" />
+                  <FaRegCommentDots className="cursor-pointer hover:text-blue-500 transition-colors duration-200" />
+                  <FaRegPaperPlane className="cursor-pointer hover:text-green-500 transition-colors duration-200" />
+                </div>
+                <FaRegBookmark className="cursor-pointer hover:text-yellow-500 text-gray-700 dark:text-gray-300 transition-colors duration-200 text-xl" />
+              </div>
+              {/* Likes & Comments Link */}
+              <span className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Liked by sarasshree and others
+              </span>
+              <a href="#" className="text-sm text-gray-800 dark:text-gray-400">
+                View all comments
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+      {/* Animated Side Panel */}
+      <div
+        className={`fixed top-5 my-10 right-3 z-50 bg-white dark:bg-[#161b22] shadow-3xl rounded-xl transition-all duration-500 ease-in-out w-full sm:w-[420px] ${
+          selectedIndex !== null ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        style={{ maxWidth: 420 }}
+      >
+        {selectedIndex !== null && (
+          <div className="relative h-full flex flex-col">
             <button
-              type="button"
-              className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none"
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white bg-gray-200 dark:bg-gray-700 rounded-full p-2 z-10"
+              onClick={handleClose}
             >
-              <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                fill="currentColor"
-                viewBox="0 0 4 15"
-              >
-                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+              <svg width={24} height={24} fill="none" stroke="currentColor" strokeWidth={2}>
+                <path d="M6 6l12 12M6 18L18 6" />
               </svg>
             </button>
-          </div>
-
-          {/* Caption */}
-          <p className="text-sm text-gray-900 dark:text-white mb-2">
-            This is the new office #{index + 1}
-          </p>
-
-          {/* Image */}
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src={url}
-              alt={`Comment ${index + 1}`}
-            />
-          </div>
-
-          {/* Actions */}
-          <div className="flex justify-between items-center px-4 py-2 border-t border-gray-200 dark:border-gray-700 mt-3">
-            <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300 text-xl">
-              <FaRegHeart className="cursor-pointer hover:text-red-500 transition-colors duration-200" />
-              <FaRegCommentDots className="cursor-pointer hover:text-blue-500 transition-colors duration-200" />
-              <FaRegPaperPlane className="cursor-pointer hover:text-green-500 transition-colors duration-200" />
+            <div className="overflow-y-auto p-8 pt-16">
+              {/* Left Center Chat Tail */}
+              <span className="absolute left-[-14px] top-1/2 transform -translate-y-1/2 w-4 h-4">
+                <svg
+                  width="18"
+                  height="32"
+                  className="text-white dark:text-[#161b22]"
+                  viewBox="0 0 18 32"
+                >
+                  <path
+                    d="M18 0 Q0 16 18 32"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              {/* Header */}
+              <div className="flex items-center space-x-3 mb-4">
+                <img
+                  className="w-12 h-12 rounded-full"
+                  src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                  alt="User"
+                />
+                <div className="flex flex-col">
+                  <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Bonnie Green
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    11:4{selectedIndex}
+                  </span>
+                </div>
+              </div>
+              {/* Caption */}
+              <p className="text-base text-gray-900 dark:text-white mb-4">
+                This is the new office #{selectedIndex + 1}
+              </p>
+              {/* Image */}
+              <div className="mb-4">
+                <img
+                  className="h-auto max-w-full rounded-xl"
+                  src={imageUrls[selectedIndex]}
+                  alt={`Comment ${selectedIndex + 1}`}
+                />
+              </div>
+              {/* Actions */}
+              <div className="flex justify-between items-center px-4 py-2 border-t border-gray-200 dark:border-gray-700 mt-3">
+                <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300 text-2xl">
+                  <FaRegHeart className="cursor-pointer hover:text-red-500 transition-colors duration-200" />
+                  <FaRegCommentDots className="cursor-pointer hover:text-blue-500 transition-colors duration-200" />
+                  <FaRegPaperPlane className="cursor-pointer hover:text-green-500 transition-colors duration-200" />
+                </div>
+                <FaRegBookmark className="cursor-pointer hover:text-yellow-500 text-gray-700 dark:text-gray-300 transition-colors duration-200 text-2xl" />
+              </div>
+              {/* Likes & Comments Link */}
+              <span className="block text-base text-gray-600 dark:text-gray-400 mt-2">
+                Liked by sarasshree and others
+              </span>
+              <a href="#" className="text-base text-gray-800 dark:text-gray-400">
+                View all comments
+              </a>
             </div>
-            <FaRegBookmark className="cursor-pointer hover:text-yellow-500 text-gray-700 dark:text-gray-300 transition-colors duration-200 text-xl" />
           </div>
-
-          {/* Likes & Comments Link */}
-          <span className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-            Liked by sarasshree and others
-          </span>
-          <a href="#" className="text-sm text-gray-800 dark:text-gray-400">
-            View all comments
-          </a>
-        </div>
+        )}
       </div>
+
+      {/* Overlay */}
+      {selectedIndex !== null && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 z-40 backdrop-blur-sm"
+          onClick={handleClose}
+        />
+      )}
     </div>
-  ))}
-</div>
 
     {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
